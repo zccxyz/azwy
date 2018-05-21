@@ -31,7 +31,7 @@ export default class Index extends Component {
                         <Icon onPress={()=>goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'} type={'Entypo'}/>
                     </Left>
                     <Body>
-                    <Title>我的萤火虫</Title>
+                    <Title>换绑手机</Title>
                     </Body>
                 </Header>
 

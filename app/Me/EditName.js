@@ -16,11 +16,11 @@ import {
     Content,
     List,
     ListItem,
-    Thumbnail, Text
+    Thumbnail, Text, Input, Item,
 } from 'native-base';
 import Color from "../Color";
 
-export default class Index extends Component {
+export default class EditName extends Component {
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -31,12 +31,16 @@ export default class Index extends Component {
                         <Icon onPress={()=>goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'} type={'Entypo'}/>
                     </Left>
                     <Body>
-                    <Title>我的萤火虫</Title>
+                    <Title>修改昵称</Title>
                     </Body>
                 </Header>
 
-                <Content>
-
+                <Content style={{backgroundColor: Color.listColor}}>
+                    <Item style={{marginBottom: 10}}><Input placeholder="请输入用户名" /></Item>
+                    <Text style={{marginBottom: 10}}>用户只能修改一次（1-10个字）</Text>
+                    <Button block style={{marginBottom: 10}}>
+                        <Text>确认修改</Text>
+                    </Button>
                 </Content>
             </Container>
         )
