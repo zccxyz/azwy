@@ -16,7 +16,7 @@ import {
     Content,
     List,
     ListItem,
-    Thumbnail, Text
+    Thumbnail, Text, Input, Item
 } from 'native-base';
 import Color from "../Color";
 
@@ -36,7 +36,20 @@ export default class Index extends Component {
                 </Header>
 
                 <Content>
-
+                    <Item>
+                        <Input placeholder="请输入原手机号" />
+                    </Item>
+                    <Item last style={{marginBottom: 10}}>
+                        <Input placeholder="请输入验证码" />
+                        <Right>
+                            <Button bordered small>
+                                <Text>发送验证码</Text>
+                            </Button>
+                        </Right>
+                    </Item>
+                    <Button disabled={true} block style={{marginBottom: 10}}>
+                        <Text>验证后绑定手机</Text>
+                    </Button>
                 </Content>
             </Container>
         )

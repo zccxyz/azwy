@@ -35,7 +35,7 @@ export default class Index extends Component {
                 <Content style={{flex: 1}}>
                     <List style={{backgroundColor: Color.navColor}}>
                         <ListItem onPress={()=>navigate('Login')}>
-                            <Thumbnail square size={80} source={require('../img/1.jpg')}/>
+                            <Thumbnail size={80} source={require('../img/1.jpg')}/>
                             <Body>
                             <Text style={{color: Color.meFontColor}}>立即登录</Text>
                             <Text style={{color: Color.meFontColor}} note>登陆后销售更多特权</Text>
@@ -47,7 +47,7 @@ export default class Index extends Component {
                     </List>
 
                     <List style={{backgroundColor: Color.listColor}}>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('Case')}>
                             <Left>
                                 <Icon name="documents" type={'Entypo'} style={{fontSize: 20, color: Color.navColor}}/>
                             </Left>
@@ -80,7 +80,7 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('Keep')}>
                             <Left>
                                 <Icon name="heart" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                             </Left>
@@ -91,7 +91,7 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('Message')}>
                             <Left>
                                 <Icon name="message" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                             </Left>
@@ -102,7 +102,7 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('Code')}>
                             <Left>
                                 <Icon name="qrcode" style={{fontSize: 20, color: Color.navColor}} type={'FontAwesome'}/>
                             </Left>
@@ -113,7 +113,7 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('About')}>
                             <Left>
                                 <Icon name="new" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                             </Left>
@@ -124,7 +124,7 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon>
+                        <ListItem icon onPress={()=>navigate('Help')}>
                             <Left>
                                 <Icon name="ios-help-circle" style={{fontSize: 20, color: Color.navColor}} type={'Ionicons'}/>
                             </Left>

@@ -16,11 +16,18 @@ import {
     Content,
     List,
     ListItem,
-    Thumbnail, Text, Separator, Form,
+    Thumbnail, Text, Separator, Form, ActionSheet, Footer, FooterTab
 } from 'native-base';
 import Color from "../Color";
 
 export default class Info extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            zt: false,
+        }
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -46,7 +53,7 @@ export default class Info extends Component {
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem>
+                        <ListItem onPress={()=>navigate('EditTel')}>
                             <Left>
                                 <Text>手机号</Text>
                             </Left>
@@ -58,7 +65,7 @@ export default class Info extends Component {
                     </List>
 
                     <List style={{backgroundColor: Color.listColor}}>
-                        <ListItem>
+                        <ListItem onPress={()=>this._alert()}>
                             <Left>
                                 <Text>登录密码</Text>
                             </Left>
@@ -67,7 +74,7 @@ export default class Info extends Component {
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem>
+                        <ListItem onPress={()=>navigate('MeInfo')}>
                             <Left>
                                 <Text>个人信息</Text>
                             </Left>
@@ -78,7 +85,31 @@ export default class Info extends Component {
                         </ListItem>
                     </List>
                 </Content>
+
+                <Footer>
+                    <FooterTab>
+                        <Button full>
+                            <Text>退出登录</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
             </Container>
+        )
+    }
+
+    _alert() {
+        ActionSheet.show(
+            {
+                options: ['通过旧密码方式', '通过手机验证方式', '取消'],
+                cancelButtonIndex: 2,
+            },
+            i => {
+                if(i==0) {
+                    this.props.navigation.navigate('EditPw');
+                }else if(i==1) {
+                    this.props.navigation.navigate('EditPw2')
+                }
+            }
         )
     }
 }

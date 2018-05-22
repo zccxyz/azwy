@@ -35,11 +35,9 @@ export default class Index extends Component {
                     </Body>
                 </Header>
 
-                <Content>
-                    <Item>
-                        <Input placeholder="请输入原手机号" />
-                    </Item>
-                    <Item last style={{marginBottom: 10}}>
+                <Content style={{backgroundColor: Color.listColor}}>
+                    <Text style={{marginBottom: 10}}>验证码已发送到手机155****4875</Text>
+                    <Item last>
                         <Input placeholder="请输入验证码" />
                         <Right>
                             <Button bordered small>
@@ -47,8 +45,11 @@ export default class Index extends Component {
                             </Button>
                         </Right>
                     </Item>
+                    <Item style={{marginBottom: 10}}>
+                        <Input placeholder="新密码" />
+                    </Item>
                     <Button disabled={true} block style={{marginBottom: 10}}>
-                        <Text>验证后绑定手机</Text>
+                        <Text>确定</Text>
                     </Button>
                 </Content>
             </Container>

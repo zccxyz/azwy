@@ -5,4 +5,6 @@ export default Color = {
     listColor: 'white',
     meFontColor: 'white',
     meListColor: 'black',
+    modalColor: 'white',
+    btn: 'gray',
 }

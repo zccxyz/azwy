@@ -16,11 +16,11 @@ import {
     Content,
     List,
     ListItem,
-    Thumbnail, Text, Input, Item,
+    Thumbnail, Text
 } from 'native-base';
 import Color from "../Color";
 
-export default class EditName extends Component {
+export default class Code extends Component {
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -31,16 +31,15 @@ export default class EditName extends Component {
                         <Icon onPress={()=>goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'} type={'Entypo'}/>
                     </Left>
                     <Body>
-                    <Title>修改密码</Title>
+                    <Title>我的消息</Title>
                     </Body>
                 </Header>
 
-                <Content style={{backgroundColor: Color.listColor}}>
-                    <Item style={{marginBottom: 10}}><Input placeholder="旧密码" /></Item>
-                    <Item style={{marginBottom: 10}}><Input placeholder="新密码" /></Item>
-                    <Button disabled={true} block style={{marginBottom: 10}}>
-                        <Text>确认修改</Text>
-                    </Button>
+                <Content>
+                    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={{uri: 'http://img4.duitang.com/uploads/item/201602/21/20160221142008_JazZE.jpeg'}}/>
+                        <Text>我的二维码</Text>
+                    </View>
                 </Content>
             </Container>
         )

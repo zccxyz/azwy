@@ -13,13 +13,25 @@ import {
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {StackNavigator, TabNavigator} from 'react-navigation';
-import { Icon } from 'native-base';
+import { Icon, Root } from 'native-base';
 import Color from './app/Color';
 
 import HomeIndex from './app/Home/Index';
 import MeIndex from './app/Me/Index';
 import Login from './app/Me/Login';
 import Reg from './app/Me/Reg';
+import Info from './app/Me/Info';
+import EditName from './app/Me/EditName';
+import EditTel from './app/Me/EditTel';
+import EditPw from './app/Me/EditPw';
+import EditPw2 from './app/Me/EditPw2';
+import MeInfo from './app/Me/MeInfo';
+import Case from './app/Me/Case';
+import Keep from './app/Me/Keep';
+import Message from './app/Me/Message';
+import Code from './app/Me/Code';
+import About from './app/Me/About';
+import Help from './app/Me/Help';
 
 const tab = TabNavigator({
     HomeIndex: {
@@ -61,6 +73,78 @@ const tab = TabNavigator({
 });
 
 const Main = StackNavigator({
+    Help: {
+        screen: Help,
+        navigationOptions: {
+            header: null
+        },
+    },
+    About: {
+        screen: About,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Code: {
+        screen: Code,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Message: {
+        screen: Message,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Keep: {
+        screen: Keep,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Case: {
+        screen: Case,
+        navigationOptions: {
+            header: null
+        },
+    },
+    MeInfo: {
+        screen: MeInfo,
+        navigationOptions: {
+            header: null
+        },
+    },
+    EditPw2: {
+        screen: EditPw2,
+        navigationOptions: {
+            header: null
+        },
+    },
+    EditPw: {
+        screen: EditPw,
+        navigationOptions: {
+            header: null
+        },
+    },
+    EditTel: {
+        screen: EditTel,
+        navigationOptions: {
+            header: null
+        },
+    },
+    EditName: {
+        screen: EditName,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Info: {
+        screen: Info,
+        navigationOptions: {
+            header: null
+        },
+    },
     Reg: {
         screen: Reg,
         navigationOptions: {
@@ -87,7 +171,7 @@ const Main = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Reg',
+    initialRouteName: 'Home',
 });
 
 type Props = {};
@@ -98,7 +182,9 @@ export default class App extends Component<Props> {
 
     render() {
         return (
-            <Main/>
+            <Root>
+                <Main/>
+            </Root>
         );
     }
 }
