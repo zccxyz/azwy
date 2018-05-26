@@ -17,6 +17,9 @@ import { Icon, Root } from 'native-base';
 import Color from './app/Color';
 
 import HomeIndex from './app/Home/Index';
+import Case from './app/Home/Case';
+import Apply from './app/Home/Apply';
+
 import MeIndex from './app/Me/Index';
 import Login from './app/Me/Login';
 import Reg from './app/Me/Reg';
@@ -26,7 +29,6 @@ import EditTel from './app/Me/EditTel';
 import EditPw from './app/Me/EditPw';
 import EditPw2 from './app/Me/EditPw2';
 import MeInfo from './app/Me/MeInfo';
-import Case from './app/Me/Case';
 import Keep from './app/Me/Keep';
 import Message from './app/Me/Message';
 import Code from './app/Me/Code';
@@ -73,6 +75,12 @@ const tab = TabNavigator({
 });
 
 const Main = StackNavigator({
+    Apply: {
+        screen: Apply,
+        navigationOptions: {
+            header: null
+        },
+    },
     Help: {
         screen: Help,
         navigationOptions: {
@@ -171,7 +179,7 @@ const Main = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Case',
 });
 
 type Props = {};
