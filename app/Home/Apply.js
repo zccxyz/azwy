@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, Picker, Modal, ScrollView,
+    View, Picker, Modal, ScrollView, TouchableOpacity,
 } from 'react-native';
 import {
     Container,
@@ -20,7 +20,7 @@ import {
 } from 'native-base';
 import Color from "../Color";
 
-export default class MeInfo extends Component {
+export default class Apply extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,6 +42,7 @@ export default class MeInfo extends Component {
                     <Body>
                     <Title>申请表</Title>
                     </Body>
+                    <Right><Text style={{padding:5, color:'white'}} onPress={()=>navigate('MeInfo')}>修改</Text></Right>
                 </Header>
 
                 <Content style={{backgroundColor: Color.listColor}}>
@@ -72,8 +73,8 @@ export default class MeInfo extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full>
-                            <Text>下一步</Text>
+                        <Button full onPress={()=>navigate('Apply2')}>
+                            <Text style={{color: 'white', fontSize: 15}}>下一步</Text>
                         </Button>
                     </FooterTab>
                 </Footer>

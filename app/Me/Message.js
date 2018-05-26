@@ -35,7 +35,7 @@ export default class Message extends Component {
                     </Body>
                 </Header>
 
-                <Content>
+                <Content style={{backgroundColor: 'white'}}>
                     <ListItem icon>
                         <Left>
                             <Icon name="emoji-sad" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>

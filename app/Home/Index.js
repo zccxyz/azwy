@@ -34,7 +34,7 @@ export default class Index extends Component {
 
                 <Content style={{flex: 1}}>
                     <List style={{backgroundColor: Color.listColor}}>
-                        <ListItem avatar>
+                        <ListItem avatar onPress={()=>navigate('Jian', {type: 1})}>
                             <Left>
                                 <Thumbnail square size={80} source={require('../img/1.jpg')}/>
                             </Left>
@@ -43,12 +43,12 @@ export default class Index extends Component {
                             <Text note>预防风险，防范于未然胜诉回款有力保障</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 1})}>
                                     <Text>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
-                        <ListItem avatar>
+                        <ListItem avatar onPress={()=>navigate('Jian', {type: 2})}>
                             <Left>
                                 <Thumbnail square size={80} source={require('../img/1.jpg')}/>
                             </Left>
@@ -57,12 +57,12 @@ export default class Index extends Component {
                             <Text note>因为垫资，所以更用心敢于垫资源于实力</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 2})}>
                                     <Text>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
-                        <ListItem avatar>
+                        <ListItem avatar onPress={()=>navigate('Jian', {type: 3})}>
                             <Left>
                                 <Thumbnail square size={80} source={require('../img/1.jpg')}/>
                             </Left>
@@ -71,12 +71,12 @@ export default class Index extends Component {
                             <Text note>强力措施，老赖无所遁我们只会做的更好</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 3})}>
                                     <Text>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
-                        <ListItem avatar>
+                        <ListItem avatar onPress={()=>navigate('Jian', {type: 4})}>
                             <Left>
                                 <Thumbnail square size={80} source={require('../img/1.jpg')}/>
                             </Left>
@@ -85,7 +85,7 @@ export default class Index extends Component {
                             <Text note>债权拖累，一次性解决快速收购快速变现</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 4})}>
                                     <Text>立即申请</Text>
                                 </Button>
                             </Right>

@@ -37,7 +37,7 @@ export default class Code extends Component {
 
                 <Content>
                     <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={{uri: 'http://img4.duitang.com/uploads/item/201602/21/20160221142008_JazZE.jpeg'}}/>
+                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={require('../img/code.png')}/>
                         <Text>我的二维码</Text>
                     </View>
                 </Content>

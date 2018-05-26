@@ -47,7 +47,7 @@ export default class Index extends Component {
                     </List>
 
                     <List style={{backgroundColor: Color.listColor}}>
-                        <ListItem icon onPress={()=>navigate('Case')}>
+                        <ListItem icon onPress={()=>navigate('MyCase')}>
                             <Left>
                                 <Icon name="documents" type={'Entypo'} style={{fontSize: 20, color: Color.navColor}}/>
                             </Left>

@@ -19,6 +19,10 @@ import Color from './app/Color';
 import HomeIndex from './app/Home/Index';
 import Case from './app/Home/Case';
 import Apply from './app/Home/Apply';
+import Apply2 from './app/Home/Apply2';
+import Success from './app/Home/Success';
+import Jian from './app/Home/Jian';
+import CaseInfo from './app/Home/CaseInfo';
 
 import MeIndex from './app/Me/Index';
 import Login from './app/Me/Login';
@@ -34,6 +38,7 @@ import Message from './app/Me/Message';
 import Code from './app/Me/Code';
 import About from './app/Me/About';
 import Help from './app/Me/Help';
+import MyCase from './app/Me/Case';
 
 const tab = TabNavigator({
     HomeIndex: {
@@ -71,10 +76,47 @@ const tab = TabNavigator({
             height: 15,
         }
     },
-    initialRouteName: 'MeIndex',
+    initialRouteName: 'HomeIndex',
 });
 
 const Main = StackNavigator({
+    CaseInfo: {
+        screen: CaseInfo,
+        navigationOptions:(e)=> ({
+            headerTitle: '案件详情',
+            headerStyle: {
+                backgroundColor: Color.navColor, elevation: 0, color: Color.listColor
+            },
+            headerLeft: <Icon onPress={()=>e.navigation.goBack()} style={{color: Color.listColor}} name={'chevron-left'} type={'Entypo'}/>,
+            headerTitleStyle: {
+                color: Color.listColor
+            }
+        })
+    },
+    MyCase: {
+        screen: MyCase,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Jian: {
+        screen: Jian,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Success: {
+        screen: Success,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Apply2: {
+        screen: Apply2,
+        navigationOptions: {
+            header: null
+        },
+    },
     Apply: {
         screen: Apply,
         navigationOptions: {
@@ -179,11 +221,10 @@ const Main = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Case',
+    initialRouteName: 'Help',
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
     componentDidMount() {
         SplashScreen.hide();
     }
