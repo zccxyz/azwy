@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View
+    View, TouchableOpacity,
 } from 'react-native';
 import {
     Container,
@@ -23,6 +23,7 @@ import Swiper from 'react-native-swiper';
 
 export default class Index extends Component {
     render() {
+        const {navigate} = this.props.navigation;
         return (
             <Container style={{flex: 1}}>
                 <Header style={{backgroundColor: Color.navColor}} androidStatusBarColor={Color.navColor}>
@@ -105,11 +106,13 @@ export default class Index extends Component {
                             <Icon name={'sound'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 20}}/>
                             <Text>最新案源</Text>
                         </View>
-                        <Text>进入案源库 >></Text>
+                        <TouchableOpacity onPress={()=>navigate('Case')}>
+                            <Text>进入案源库 >></Text>
+                        </TouchableOpacity>
                     </View>
                     <Swiper style={{height: 110}} autoplay={true} showsPagination={false}>
                         <View>
-                            <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}}>
+                            <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}} onPress={()=>navigate('Case')}>
                                 <Body>
                                 <Text>阿里巴巴有限公司</Text>
                                 <Text note>待委托</Text>
@@ -137,7 +140,7 @@ export default class Index extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View>
+                        <TouchableOpacity onPress={()=>navigate('Case')}>
                             <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}}>
                                 <Body>
                                 <Text>阿里巴巴有限公司</Text>
@@ -165,7 +168,7 @@ export default class Index extends Component {
                                     <Text style={{fontSize: 15}}>北京市日本县</Text>
                                 </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     </Swiper>
                 </Content>
             </Container>
