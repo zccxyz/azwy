@@ -113,6 +113,17 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
+                        <ListItem icon onPress={()=>navigate('Cooperation')}>
+                            <Left>
+                                <Icon name="handshake-o" style={{fontSize: 20, color: Color.navColor}} type={'FontAwesome'}/>
+                            </Left>
+                            <Body>
+                            <Text>律所合作申请</Text>
+                            </Body>
+                            <Right>
+                                <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
+                            </Right>
+                        </ListItem>
                         <ListItem icon onPress={()=>navigate('About')}>
                             <Left>
                                 <Icon name="new" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>

@@ -39,6 +39,7 @@ import Code from './app/Me/Code';
 import About from './app/Me/About';
 import Help from './app/Me/Help';
 import MyCase from './app/Me/Case';
+import Cooperation from './app/Me/Cooperation';
 
 const tab = TabNavigator({
     HomeIndex: {
@@ -80,6 +81,12 @@ const tab = TabNavigator({
 });
 
 const Main = StackNavigator({
+    Cooperation: {
+        screen: Cooperation,
+        navigationOptions: {
+            header: null
+        },
+    },
     CaseInfo: {
         screen: CaseInfo,
         navigationOptions:(e)=> ({
@@ -221,7 +228,7 @@ const Main = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Help',
+    initialRouteName: 'Home',
 });
 
 export default class App extends Component {

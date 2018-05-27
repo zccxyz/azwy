@@ -29,6 +29,7 @@ export default class Cooperation extends Component {
             type: 1,
             type2: 2,
             zt: false,
+            area: {city: '', a: '', c: ''}
         }
     }
 
@@ -81,7 +82,9 @@ export default class Cooperation extends Component {
                         </Item>
                         <Item fixedLabel>
                             <Label>所在地区</Label>
-                            <Text style={{width: WIDTH/2, paddingTop: 20, paddingBottom:20}} onPress={()=>this._change()}>请选择地区</Text>
+                            <Text style={{width: WIDTH/2, paddingTop: 20, paddingBottom:20}} onPress={()=>this._change()}>
+                                {this.state.area.city===''?'请选择地区':this.state.area.city+'-'+this.state.area.a+'-'+this.state.area.c}
+                            </Text>
                         </Item>
                         <Item fixedLabel>
                             <Label>负责人</Label>
@@ -148,28 +151,18 @@ export default class Cooperation extends Component {
 
     _createAreaData(n) {
         let data = [];
-        let len = area.length;console.log(area);
-        for (let i=0;i<len;i++) {
-            let city = [];
-            for (let j = 0; j < area[i]['city'].length; j++) {
-                city.push(area[i]['city'][j].name);
-            }
-            let a = {};
-            a[area[i].name] = city;
-            data.push(a)
-        }
-        /*for(let i=0;i<len;i++){
+        let len = area.length;
+        for(let i=0;i<len;i++){
             let city = [];
             for(let j=0,cityLen=area[i]['city'].length;j<cityLen;j++){
                 let _city = {};
                 _city[area[i]['city'][j]['name']] = area[i]['city'][j]['area'];
                 city.push(_city);
             }
-            console.log(city);return
             let _data = {};
             _data[area[i]['name']] = city;
             data.push(_data);
-        }*/
+        }
         return data;
     }
 
@@ -180,15 +173,19 @@ export default class Cooperation extends Component {
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
             pickerTitleText: '选择地区',
-            onPickerConfirm: pickedValue => {
-                console.log('area', pickedValue);
+            onPickerConfirm: v => {
+                //console.log('area', pickedValue);
+                this.state.area.city = v[0];
+                this.state.area.a = v[1];
+                this.state.area.c = v[2];
+                this.setState({area: this.state.area});
             },
             onPickerCancel: pickedValue => {
                 console.log('area', pickedValue);
             },
             onPickerSelect: pickedValue => {
                 //Picker.select(['山东', '青岛', '黄岛区'])
-                console.log('area', pickedValue);
+                //console.log('area', pickedValue);
             }
         });
         Picker2.show();
