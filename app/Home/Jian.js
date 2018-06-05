@@ -56,7 +56,7 @@ export default class Jian extends Component {
                 <Content>
                     <List>
                         <ListItem>
-                            <Text style={{fontSize: 20}}>
+                            <Text style={{fontSize: 20}}>               
                                 1.什么是{this.state.type===1?'案件诊断':null}
                                 {this.state.type===2?'垫资诉讼':null}
                                 {this.state.type===3?'案件执行':null}
@@ -64,7 +64,7 @@ export default class Jian extends Component {
                             </Text>
                         </ListItem>
                         <View style={{padding:20}}>
-                            <Text>氨基酸地服务亲爱额锐气欧文一发IQ欧文如日期欧文权威凶恶如</Text>
+                            <Text>由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在</Text>
                         </View>
 
                         <ListItem>
@@ -76,7 +76,7 @@ export default class Jian extends Component {
                             </Text>
                         </ListItem>
                         <View style={{padding:20}}>
-                            <Text>氨基酸地服务亲爱额锐气欧文一发IQ欧文如日期欧文权威凶恶如</Text>
+                            <Text>由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在</Text>
                         </View>
 
                         <ListItem>
@@ -88,7 +88,7 @@ export default class Jian extends Component {
                             </Text>
                         </ListItem>
                         <View style={{padding:20}}>
-                            <Text>氨基酸地服务亲爱额锐气欧文一发IQ欧文如日期欧文权威凶恶如</Text>
+                            <Text>由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在</Text>
                         </View>
                     </List>
                 </Content>

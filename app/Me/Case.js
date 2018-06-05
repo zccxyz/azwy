@@ -48,7 +48,7 @@ export default class Case extends Component {
                             </Right>
                         </ListItem>
 
-                        <ListItem style={{backgroundColor: 'white', marginLeft:0}}>
+                        <ListItem style={{backgroundColor: 'white', marginLeft:0}} onPress={()=>navigate('CaseInfo')}>
                             <Body>
                             <Text>买合同纠纷 阿里巴巴 VS 腾讯</Text>
                             <Text note>案件标的：12万元</Text>

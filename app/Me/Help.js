@@ -25,12 +25,12 @@ export default class Help extends Component {
         super(props);
         this.state = {
             list: [
-                {name: '一、如何联系客服', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
-                {name: '二、账户注册类', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
-                {name: '三、免息贷业务', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
-                {name: '四、申请代理案件', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
-                {name: '五、案件发布类', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
-                {name: '六、安枕无忧亮度等级规则类', content: '气我饿UR五我去问权威去爱恶如一日期为瑞维权日', zt: false},
+                {name: '一、如何联系客服', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
+                {name: '二、账户注册类', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
+                {name: '三、免息贷业务', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
+                {name: '四、申请代理案件', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
+                {name: '五、案件发布类', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
+                {name: '六、安枕无忧亮度等级规则类', content: '由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在', zt: false},
             ],
         };
     }

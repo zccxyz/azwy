@@ -20,9 +20,13 @@ import HomeIndex from './app/Home/Index';
 import Case from './app/Home/Case';
 import Apply from './app/Home/Apply';
 import Apply2 from './app/Home/Apply2';
+import Apply3 from './app/Home/Apply3';
+import Apply4 from './app/Home/Apply4';
+import Apply5 from './app/Home/Apply5';
 import Success from './app/Home/Success';
 import Jian from './app/Home/Jian';
 import CaseInfo from './app/Home/CaseInfo';
+import CaseInfo2 from './app/Home/CaseInfo2';
 
 import MeIndex from './app/Me/Index';
 import Login from './app/Me/Login';
@@ -40,6 +44,10 @@ import About from './app/Me/About';
 import Help from './app/Me/Help';
 import MyCase from './app/Me/Case';
 import Cooperation from './app/Me/Cooperation';
+import Bad from './app/Me/Bad';
+import BadInfo from './app/Me/BadInfo';
+import Accept from './app/Me/Accept';
+import AcceptInfo from './app/Me/AcceptInfo';
 
 const tab = TabNavigator({
     HomeIndex: {
@@ -81,6 +89,48 @@ const tab = TabNavigator({
 });
 
 const Main = StackNavigator({
+    BadInfo: {
+        screen: BadInfo,
+        navigationOptions: {
+            header: null
+        },
+    },
+    CaseInfo2: {
+        screen: CaseInfo2,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Apply5: {
+        screen: Apply5,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Apply4: {
+        screen: Apply4,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Apply3: {
+        screen: Apply3,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Accept: {
+        screen: Accept,
+        navigationOptions: {
+            header: null
+        },
+    },
+    Bad: {
+        screen: Bad,
+        navigationOptions: {
+            header: null
+        },
+    },
     Cooperation: {
         screen: Cooperation,
         navigationOptions: {
@@ -226,9 +276,22 @@ const Main = StackNavigator({
                 color: Color.listColor
             }
         })
+    },
+    AcceptInfo: {
+        screen: AcceptInfo,
+        navigationOptions:(e)=> ({
+            headerTitle: '案件详情',
+            headerStyle: {
+                backgroundColor: Color.navColor, elevation: 0, color: Color.listColor
+            },
+            headerLeft: <Icon onPress={()=>e.navigation.goBack()} style={{color: Color.listColor}} name={'chevron-left'} type={'Entypo'}/>,
+            headerTitleStyle: {
+                color: Color.listColor
+            }
+        })
     }
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Accept',
 });
 
 export default class App extends Component {

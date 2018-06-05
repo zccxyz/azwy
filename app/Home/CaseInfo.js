@@ -42,7 +42,7 @@ class Sp extends React.Component {
                             </Left>
                             <View style={{width: WIDTH-150}}>
                                 <Text style={{paddingLeft: 20, fontSize:14}}>
-                                    安慰句容玩我亲爱额UR玩偶觉得首付款建安街收到付款24123卡接收到风口浪尖阿萨德开了房间技法上看到了
+                                    由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
                                 </Text>
                             </View>
                         </ListItem>
@@ -53,7 +53,7 @@ class Sp extends React.Component {
                             </Left>
                             <View style={{width: WIDTH-150}}>
                                 <Text style={{paddingLeft: 20, fontSize:14}}>
-                                    安慰句容玩我亲爱额UR玩偶觉得首付款建安街收到付款24123卡接收到风口浪尖阿萨德开了房间技法上看到了
+                                    由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
                                 </Text>
                             </View>
                         </ListItem>
@@ -113,7 +113,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                全文URIQ无诶肉气温日欧权威玩啊无诶u11氨甲环酸大家反馈哈四大皆空氨基酸地方哈就是东方红哈就是的
+                                由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
                             </Text>
                         </View>
                     </ListItem>
