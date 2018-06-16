@@ -12,6 +12,7 @@
     "react-native": "0.55.4",
     "react-native-picker": "^4.3.7",
     "react-native-splash-screen": "^3.0.6",
+    "react-native-storage": "^0.2.2",
     "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.0.1"

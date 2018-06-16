@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     Platform,
-    StyleSheet,
+    StyleSheet, TouchableOpacity,
     View
 } from 'react-native';
 import {
@@ -16,11 +16,10 @@ import {
     Content,
     List,
     ListItem,
-    Thumbnail, Text
-} from 'native-base';
+    Thumbnail, Text, } from 'native-base';
 import Color from "../Color";
 
-export default class Code extends Component {
+export default class SysMsg extends Component {
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -31,14 +30,13 @@ export default class Code extends Component {
                         <Icon onPress={()=>goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'} type={'Entypo'}/>
                     </Left>
                     <Body>
-                    <Title>我的二维码</Title>
+                    <Title>系统消息</Title>
                     </Body>
                 </Header>
 
                 <Content>
-                    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={require('../img/code.png')}/>
-                        <Text>我的二维码</Text>
+                    <View style={{height:HEIGHT/2,justifyContent:'center', alignItems:'center'}}>   
+                        <Text>暂无系统消息</Text>
                     </View>
                 </Content>
             </Container>

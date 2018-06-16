@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Platform,
-    StyleSheet,
-    View, Picker, Modal, ScrollView, TouchableOpacity,
+    View, Picker
 } from 'react-native';
 import {
     Container,

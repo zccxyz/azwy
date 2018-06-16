@@ -21,6 +21,13 @@ import {
 import Color from "../Color";
 
 export default class EditName extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            name: '',
+        };
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -36,13 +43,24 @@ export default class EditName extends Component {
                 </Header>
 
                 <Content style={{backgroundColor: Color.listColor}}>
-                    <Item style={{marginBottom: 10}}><Input placeholder="请输入用户名" /></Item>
+                    <Item style={{marginBottom: 10}}><Input placeholder="请输入用户名" onChangeText={e=>this.setState({name: e})}/></Item>
                     <Text style={{marginBottom: 10}}>用户只能修改一次（1-10个字）</Text>
-                    <Button block style={{marginBottom: 10}}>
+                    <Button block style={{marginBottom: 10}} onPress={()=>this._modify()}>
                         <Text>确认修改</Text>
                     </Button>
                 </Content>
             </Container>
         )
+    }
+
+    _modify() {
+        if(!this.state.name) {
+            err('请填写用户名');
+            return
+        }
+        POST(METHOD.amend, `nickname=${this.state.name}`)
+            .then(rs=>{
+                console.log(rs);
+            })
     }
 }

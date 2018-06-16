@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Platform,
-    StyleSheet,
-    View
+    DeviceEventEmitter,
 } from 'react-native';
 import {
     Container,
@@ -21,6 +19,37 @@ import {
 import Color from "../Color";
 
 export default class Index extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            zt: 1, //1未登录，2登录
+            user: null,
+        };
+    }
+
+    componentDidMount() {
+        this.deEmitter = DeviceEventEmitter.addListener('User', (a) => {
+            if(a) {
+                this.setState({user: a, zt: 2});
+            }else{
+                this.setState({user: null, zt: 1});
+            }
+        });
+        SAVE.load({
+            key: 'user'
+        }).then(rs=>{
+            User = rs;
+            this.setState({zt: 2, user: rs});
+            console.log(rs, '数据');
+        }).catch(e=>{
+            console.log(111);
+        });
+
+    }
+    componentWillUnmount() {
+        this.deEmitter.remove();
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -28,17 +57,17 @@ export default class Index extends Component {
                 <Header style={{backgroundColor: Color.navColor}} androidStatusBarColor={Color.navColor}
                         noShadow={true}>
                     <Body>
-                    <Title>我的萤火虫</Title>
+                    <Title>我的安枕无忧</Title>
                     </Body>
                 </Header>
 
                 <Content style={{flex: 1}}>
                     <List style={{backgroundColor: Color.navColor}}>
-                        <ListItem onPress={()=>navigate('Login')}>
-                            <Thumbnail size={80} source={require('../img/1.jpg')}/>
+                        <ListItem onPress={()=>navigate(this.state.zt==1?'Login':'Info')}>
+                            {this.state.zt==2?<Thumbnail large source={require('../img/1.jpg')}/>:<Icon name={'ios-person-outline'} style={{fontSize: 60, color: 'white'}}/>}
                             <Body>
-                            <Text style={{color: Color.meFontColor}}>立即登录</Text>
-                            <Text style={{color: Color.meFontColor}} note>登陆后销售更多特权</Text>
+                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.name}</Text>:<Text style={{color: Color.meFontColor}}>立即登录</Text>}
+                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.phone}</Text>:<Text style={{color: Color.meFontColor}} note>登录后享受更多特权</Text>}
                             </Body>
                             <Right>
                                 <Icon style={{color: Color.meFontColor}} name={'chevron-thin-right'} type={'Entypo'}/>
@@ -52,7 +81,7 @@ export default class Index extends Component {
                                 <Icon name="documents" type={'Entypo'} style={{fontSize: 20, color: Color.navColor}}/>
                             </Left>
                             <Body>
-                            <Text>我的案件</Text>
+                                <Text>我的案件</Text>
                             </Body>
                             <Right>
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {
-    Platform,
-    StyleSheet,
-    View
+    DeviceEventEmitter,
+    Alert,
 } from 'react-native';
 import {
     Container,
@@ -25,6 +24,7 @@ export default class Info extends Component {
         super(props);
         this.state = {
             zt: false,
+            user: User,
         }
     }
 
@@ -48,7 +48,7 @@ export default class Info extends Component {
                             <Left>
                                 <Text>用户昵称</Text>
                             </Left>
-                            <Body style={{alignItems: 'flex-end'}}><Text note>瑞氨基酸</Text></Body>
+                            <Body style={{alignItems: 'flex-end'}}><Text note style={{fontSize: 12}}>{this.state.user.name}</Text></Body>
                             <Right style={{alignItems: 'flex-end'}}>
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
@@ -57,7 +57,7 @@ export default class Info extends Component {
                             <Left>
                                 <Text>手机号</Text>
                             </Left>
-                            <Body style={{alignItems: 'flex-end'}}><Text note>185****1547</Text></Body>
+                            <Body style={{alignItems: 'flex-end'}}><Text note>{this.state.user.phone}</Text></Body>
                             <Right style={{alignItems: 'flex-end'}}>
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
@@ -88,8 +88,8 @@ export default class Info extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full>
-                            <Text>退出登录</Text>
+                        <Button full onPress={()=>this._logout()}>
+                            <Text style={{color: 'white'}}>退出登录</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
@@ -98,8 +98,7 @@ export default class Info extends Component {
     }
 
     _alert() {
-        ActionSheet.show(
-            {
+        ActionSheet.show({
                 options: ['通过旧密码方式', '通过手机验证方式', '取消'],
                 cancelButtonIndex: 2,
             },
@@ -109,7 +108,24 @@ export default class Info extends Component {
                 }else if(i==1) {
                     this.props.navigation.navigate('EditPw2')
                 }
-            }
+            })
+    }
+
+    _logout() {
+        Alert.alert(
+            '提示',
+            '确定退出吗？',
+            [
+                {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: '确定', onPress: () => {
+                        SAVE.remove({
+                            key: 'user',
+                        });
+                        DeviceEventEmitter.emit('User', null);
+                        this.props.navigation.goBack();
+                    }},
+            ],
+            { cancelable: false }
         )
     }
 }

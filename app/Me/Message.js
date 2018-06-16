@@ -36,7 +36,7 @@ export default class Message extends Component {
                 </Header>
 
                 <Content style={{backgroundColor: 'white'}}>
-                    <ListItem icon>
+                    <ListItem icon onPress={()=>navigate('SysMsg')}>
                         <Left>
                             <Icon name="emoji-sad" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                         </Left>
@@ -47,7 +47,7 @@ export default class Message extends Component {
                             <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                         </Right>
                     </ListItem>
-                    <ListItem icon>
+                    <ListItem icon onPress={()=>navigate('MyMsg')}>
                         <Left>
                             <Icon name="md-person" style={{fontSize: 20, color: Color.navColor}} type={'Ionicons'}/>
                         </Left>

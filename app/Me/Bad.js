@@ -46,7 +46,7 @@ export default class Keep extends Component {
                                 <Icon name={'ios-arrow-forward'}/>
                             </Right>
                         </ListItem>
-                        <ListItem>
+                        <ListItem onPress={()=>navigate('BadInfo')}>
                             <Body>
                             <Text>测试2</Text>
                             <Text note>资产包价格：52000.00元</Text>

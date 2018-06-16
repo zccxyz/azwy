@@ -5,12 +5,6 @@
  */
 
 import React, {Component} from 'react';
-import {
-    Platform,
-    StyleSheet,
-    Text,
-    View
-} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 import { Icon, Root } from 'native-base';
@@ -48,6 +42,8 @@ import Bad from './app/Me/Bad';
 import BadInfo from './app/Me/BadInfo';
 import Accept from './app/Me/Accept';
 import AcceptInfo from './app/Me/AcceptInfo';
+import MyMsg from './app/Me/MyMsg';
+import SysMsg from './app/Me/SysMsg';
 
 const tab = TabNavigator({
     HomeIndex: {
@@ -89,6 +85,18 @@ const tab = TabNavigator({
 });
 
 const Main = StackNavigator({
+    SysMsg: {
+        screen: SysMsg,
+        navigationOptions: {
+            header: null
+        },
+    },
+    MyMsg: {
+        screen: MyMsg,
+        navigationOptions: {
+            header: null
+        },
+    },
     BadInfo: {
         screen: BadInfo,
         navigationOptions: {
@@ -291,7 +299,7 @@ const Main = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Accept',
+    initialRouteName: 'Home',
 });
 
 export default class App extends Component {

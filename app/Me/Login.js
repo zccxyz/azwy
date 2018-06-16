@@ -1,46 +1,70 @@
 import React, {Component} from 'react';
 import {
-    Platform,
-    StyleSheet,
-    View
+    DeviceEventEmitter,
 } from 'react-native';
 import {
     Container,
-    Header,
-    Left,
-    Body,
     Right,
     Button,
-    Icon,
-    Title,
-    Content,
-    List,
-    ListItem,
-    Thumbnail, Text, Item, Form, Input
+    Content, Text, Item, Form, Input
 } from 'native-base';
 import Color from "../Color";
-import {TabNavigator, StackNavigator} from "react-navigation";
+import {TabNavigator} from "react-navigation";
 
-class Login extends React.Component {
+class Login1 extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tel: '',
+            pw: '',
+        };
+    }
+
+    _login() {
+        const state = this.state;
+        if (state.tel.length != 11) {
+            alert('请正确填写手机号码');
+            return;
+        }
+        if (!state.pw) {
+            alert('请正确填写以上内容');
+            return;
+        }
+        POST(METHOD.login, `phone=${state.tel}&password=${state.pw}`).then(rs=>{
+            if(rs.code==1) {
+                msg('登录成功');
+                SAVE.save({
+                    key: 'user',
+                    data: {name: rs.data.nickname, phone: rs.data.phone, id: rs.data.id},
+                });
+                DeviceEventEmitter.emit('User', {name: rs.data.nickname, phone: rs.data.phone, id: rs.data.id});
+                this.props.navigation.navigate('MeIndex');
+                console.log(rs);
+            }else{
+                msg(rs.data);
+            }
+        })
+    }
 
     render() {
-        const {navigate}=this.props.navigation;
-        return(
+        const {navigate} = this.props.navigation;
+        return (
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <Form style={{marginBottom: 10}}>
                         <Item>
-                            <Input placeholder="手机号" />
+                            <Input placeholder="手机号" onChangeText={e => this.setState({tel: e})}
+                                   keyboardType={'numeric'}/>
                         </Item>
                         <Item last>
-                            <Input placeholder="密码" />
+                            <Input placeholder="密码" secureTextEntry onChangeText={e => this.setState({pw: e})}/>
                         </Item>
                     </Form>
-                    <Button block style={{marginBottom: 10}}>
+                    <Button block style={{marginBottom: 10}} onPress={() => this._login()}>
                         <Text>登录</Text>
                     </Button>
-                    <Button bordered block  onPress={()=>navigate('Reg')}>
+                    <Button bordered block onPress={() => navigate('Reg')}>
                         <Text>注册新用户</Text>
                     </Button>
                 </Content>
@@ -51,17 +75,17 @@ class Login extends React.Component {
 
 class Login2 extends Component {
     render() {
-        const {navigate}=this.props.navigation;
-        return(
+        const {navigate, goBack} = this.props.navigation;
+        return (
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <Form style={{marginBottom: 10}}>
                         <Item>
-                            <Input placeholder="手机号" />
+                            <Input placeholder="手机号"/>
                         </Item>
                         <Item last>
-                            <Input placeholder="验证码" />
+                            <Input placeholder="验证码"/>
                             <Right>
                                 <Button bordered small>
                                     <Text>发送验证码</Text>
@@ -69,10 +93,10 @@ class Login2 extends Component {
                             </Right>
                         </Item>
                     </Form>
-                    <Button block style={{marginBottom: 10}}>
+                    <Button block style={{marginBottom: 10}} onPress={()=>goBack()}>
                         <Text>登录</Text>
                     </Button>
-                    <Button bordered block onPress={()=>navigate('Reg')}>
+                    <Button bordered block onPress={() => navigate('Reg')}>
                         <Text>注册新用户</Text>
                     </Button>
                 </Content>
@@ -81,9 +105,9 @@ class Login2 extends Component {
     }
 }
 
-export default tab = TabNavigator({
-    Login: {
-        screen: Login,
+export default Tab2 = TabNavigator({
+    Login1: {
+        screen: Login1,
         navigationOptions: {
             tabBarLabel: '密码登录',
         }
@@ -104,5 +128,5 @@ export default tab = TabNavigator({
             backgroundColor: Color.listColor
         }
     },
-    initialRouteName: 'Login',
+    backBehavior: 'none',
 });
