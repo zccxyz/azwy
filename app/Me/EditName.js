@@ -58,9 +58,14 @@ export default class EditName extends Component {
             err('请填写用户名');
             return
         }
-        POST(METHOD.amend, `nickname=${this.state.name}`)
+        POST(METHOD.amend, `nickname=${this.state.name}&id=${User.id}&type=1`)
             .then(rs=>{
-                console.log(rs);
+                if(rs.code==1) {
+                    msg('修改成功');
+                    this.props.navigation.goBack();
+                }else{
+                    err(rs.data);
+                }
             })
     }
 }

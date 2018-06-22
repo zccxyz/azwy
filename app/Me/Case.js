@@ -21,6 +21,17 @@ import {
 import Color from "../Color";
 
 export default class Case extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+        }
+    }
+
+    componentDidMount() {
+        this._getCase()
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -62,5 +73,12 @@ export default class Case extends Component {
                 </Content>
             </Container>
         )
+    }
+
+    _getCase() {
+        POST(METHOD.apply)
+            .then(rs=>{
+                console.log(rs);
+            })
     }
 }

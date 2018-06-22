@@ -29,7 +29,26 @@ export default class MeInfo extends Component {
             type: 1,
             type2: 2,
             zt: false,
+
+            user_name: '',
+            status: User.status,
+            certificate: '',
+            genre: 1,
+            lawyer: '',
+            lawyer_name: '',
+            province: '',
+            city: '',
+            area: '',
+            arr: [],
+            email: '',
         }
+    }
+
+    componentDidMount() {
+        this.setState({user_name: User.user_name, status: User.status, certificate: User.certificate, genre: User.genre,
+            lawyer: User.lawyer, lawyer_name: User.lawyer_name, province: User.province, city: User.city, area: User.area,
+        email: User.email});
+        this._getLy();
     }
 
     render() {
@@ -50,54 +69,57 @@ export default class MeInfo extends Component {
                     <Form>
                         <Item fixedLabel>
                             <Label>真实姓名</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({user_name: e})} defaultValue={this.state.user_name}/>
                         </Item>
-                        <Item fixedLabel >
+                        <Item fixedLabel>
                             <Label>证件类型</Label>
                             <Picker style={{width: WIDTH/2}}
-                                selectedValue={this.state.type}
-                                onValueChange={(lang) => this.setState({type: lang})}>
+                                selectedValue={this.state.genre}
+                                onValueChange={(lang) => this.setState({genre: lang})}>
                                 <Picker.Item label="身份证" value="1" />
                                 <Picker.Item label="营业执照" value="2" />
                             </Picker>
                         </Item>
                         <Item fixedLabel>
                             <Label>证件号</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({certificate: e})} defaultValue={this.state.certificate}/>
                         </Item>
                         <Item fixedLabel>
                             <Label>电子邮箱</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({email: e})} defaultValue={this.state.email}/>
                         </Item>
 
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <ListItem style={{width: WIDTH/2}}>
                                 <Text>普通用户</Text>
                                 <Right>
-                                    <Radio selected={this.state.type2==1?true:false} onPress={()=>this.setState({type2: 1})}/>
+                                    <Radio selected={this.state.status==1?true:false} onPress={()=>this.setState({status: 1})}/>
                                 </Right>
                             </ListItem>
                             <ListItem style={{width: WIDTH/2}}>
                                 <Text>升级为律师</Text>
                                 <Right>
-                                    <Radio selected={this.state.type2==2?true:false}  onPress={()=>this.setState({type2: 2})}/>
+                                    <Radio selected={this.state.status==2?true:false}  onPress={()=>this.setState({status: 2})}/>
                                 </Right>
                             </ListItem>
                         </View>
 
-                        {this.state.type2==2?(
+                        {this.state.status==2?(
                             <View>
                                 <Item fixedLabel>
                                     <Label>律师证号</Label>
-                                    <Input />
+                                    <Input onChangeText={e=>this.setState({lawyer: e})} defaultValue={this.state.lawyer}/>
                                 </Item>
                                 <Item fixedLabel>
                                     <Label>律所名称</Label>
-                                    <Input />
+                                    <Input onChangeText={e=>this.setState({lawyer_name: e})} defaultValue={this.state.lawyer_name}/>
                                 </Item>
                                 <Item style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <Label>优势地区</Label>
-                                    <Text style={{width: WIDTH/2, paddingTop: 20, paddingBottom:20}} onPress={()=>this._change()}>请选择地区</Text>
+                                    {this.state.province?<Text style={{width: WIDTH/2, paddingTop: 20, paddingBottom:20}} onPress={()=>this._change()}>
+                                            {this.state.province+this.state.city}
+                                        </Text>:
+                                        <Text style={{width: WIDTH/2, paddingTop: 20, paddingBottom:20}} onPress={()=>this._change()}>请选择地区</Text>}
                                 </Item>
                                 <Item style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                     <Label>擅长领域</Label>
@@ -117,12 +139,23 @@ export default class MeInfo extends Component {
                             </View>
                             <Text style={{backgroundColor: 'gray', height: 0.5, marginBottom: 10}}/>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginLeft: 10, marginRight: 10, flexWrap: 'wrap'}}>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>债权债务</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>建设工程</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>知识产权</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>合同纠纷</Text>
+                                {this.state.arr.map((v, k)=>{
+                                    return <Text key={k} style={{padding: 10, backgroundColor: v.zt?Color.navColor:Color.btn, color: 'white', marginBottom: 5}}
+                                    onPress={()=>{
+                                        let arr = [];
+                                        for(let v of this.state.arr){
+                                            if(v.zt) {
+                                                arr.push(v);
+                                            }
+                                        }
+                                        if(arr.length>=4) {
+                                            return;
+                                        }
+                                        this.state.arr[k].zt=!v.zt;
+                                        this.setState({arr: this.state.arr})}}>{v.name}</Text>
+                                })}
                             </View>
-                            <Button full style={{position: 'absolute', bottom: 0, width: WIDTH}}>
+                            <Button full style={{position: 'absolute', bottom: 0, width: WIDTH}} onPress={()=>this.setState({zt: false})}>
                                 <Text>确认选择</Text>
                             </Button>
                         </View>
@@ -131,13 +164,84 @@ export default class MeInfo extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full>
-                            <Text>完成修改</Text>
+                        <Button full onPress={()=>this._save()}>
+                            <Text style={{color: 'white'}}>完成修改</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
             </Container>
         )
+    }
+
+    _getLy() {
+        GET(METHOD.field)
+            .then(rs=>{
+                if(rs.code==1) {
+                    let arr = [];
+                    for(let v of rs.data) {
+                        arr.push({zt: false, name: v});
+                    }
+                    if(User.good_at.length>0) {
+                        for(let v of User.good_at) {
+                            for(let k of arr) {
+                                if(v == k.name) {
+                                    k.zt = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    this.setState({arr: arr});
+                }else{
+                    err(rs.data)
+                }
+            })
+    }
+
+    _save() {
+        if(this.state.status==1) {
+            if(!this.state.user_name || !this.state.certificate || !this.state.email) {
+                err('请填完以上内容');
+            }else{
+                POST(METHOD.amend, `user_name=${this.state.user_name}&certificate=${this.state.certificate}&status=${this.state.status}&email=${this.state.email}
+        &genre=${this.state.genre}&id=${User.id}`)
+                    .then(rs=>{
+                        console.log(rs);
+                    });
+            }
+        }else{
+            if(!this.state.user_name || !this.state.certificate || !this.state.email || !this.state.lawyer ||
+            !this.state.lawyer_name || !this.state.province || !this.state.city) {
+                err('请填完以上信息2');
+            }else{
+                let arr = [];
+                for(let v of this.state.arr) {
+                    if(v.zt) {
+                        arr.push(v.name);
+                    }
+                }
+                if(arr.length==0 || arr.length>4) {
+                    err('请选择擅长领域');
+                    return;
+                }
+                POST(METHOD.amend, `user_name=${this.state.user_name}&certificate=${this.state.certificate}&status=${this.state.status}&email=${this.state.email}
+        &genre=${this.state.genre}&id=${User.id}&lawyer=${this.state.lawyer}&lawyer_name=${this.state.lawyer_name}&province=${this.state.province}&city=${this.state.city}&
+        area=${this.state.area}&good_at=${arr}`)
+                    .then(rs=>{
+                        if(rs.code==1) {
+                            msg('修改成功');
+                            User = rs.data;
+                            SAVE.save({
+                                key: 'user',
+                                data: rs.data,
+                            })
+                        }else{
+                            err(rs.data);
+                        }
+                        console.log(rs);
+                    });
+            }
+        }
     }
 
     _createAreaData(n) {
@@ -174,15 +278,14 @@ export default class MeInfo extends Component {
             pickerConfirmBtnText: '确定',
             pickerCancelBtnText: '取消',
             pickerTitleText: '选择地区',
-            onPickerConfirm: pickedValue => {
-                console.log('area', pickedValue);
+            onPickerConfirm: e => {
+                this.setState({province: e[0], city: e[1]});
             },
             onPickerCancel: pickedValue => {
                 console.log('area', pickedValue);
             },
-            onPickerSelect: pickedValue => {
+            onPickerSelect: e => {
                 //Picker.select(['山东', '青岛', '黄岛区'])
-                console.log('area', pickedValue);
             }
         });
         Picker2.show();

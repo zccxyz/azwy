@@ -26,6 +26,7 @@ GLOBAL.POST = function(method, params) {
     })
 };
 GLOBAL.GET = function(method, params) {
+    console.log(`${YM+method}?${params}`);
     return fetch(`${YM+method}?${params}`)
         .then(r=>r.json())
         .then(rs=>{

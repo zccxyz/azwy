@@ -35,9 +35,9 @@ class Login1 extends Component {
                 msg('登录成功');
                 SAVE.save({
                     key: 'user',
-                    data: {name: rs.data.nickname, phone: rs.data.phone, id: rs.data.id},
+                    data: rs.data,
                 });
-                DeviceEventEmitter.emit('User', {name: rs.data.nickname, phone: rs.data.phone, id: rs.data.id});
+                DeviceEventEmitter.emit('User', rs.data);
                 this.props.navigation.navigate('MeIndex');
                 console.log(rs);
             }else{

@@ -48,7 +48,7 @@ export default class Info extends Component {
                             <Left>
                                 <Text>用户昵称</Text>
                             </Left>
-                            <Body style={{alignItems: 'flex-end'}}><Text note style={{fontSize: 12}}>{this.state.user.name}</Text></Body>
+                            <Body style={{alignItems: 'flex-end'}}><Text note style={{fontSize: 12}}>{User.nickname}</Text></Body>
                             <Right style={{alignItems: 'flex-end'}}>
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>

@@ -27,10 +27,29 @@ export default class Cooperation extends Component {
         super(props);
         this.state = {
             type: 1,
-            type2: 2,
+            certificate_type: 1,
             zt: false,
-            area: {city: '', a: '', c: ''}
+            area: {city: '', a: '', c: ''},
+
+            firm_name: '',
+            certificate_number: '',
+            principal: '',
+            phone: '',
+            scale: 1,
+            contacts: '',
+            advantage: '',
         }
+    }
+
+    componentDidMount() {
+        //获取优势领域
+    }
+
+    _sub() {
+        POST(METHOD.cooperation, ``)
+            .then(rs=>{
+                console.log(rs);
+            })
     }
 
     render() {
@@ -51,7 +70,7 @@ export default class Cooperation extends Component {
                     <Form>
                         <Item fixedLabel>
                             <Label>律所名称</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({firm_name: e})}/>
                         </Item>
                         <Item fixedLabel >
                             <Label>律所类型</Label>
@@ -67,14 +86,14 @@ export default class Cooperation extends Component {
                         <Item fixedLabel >
                             <Label>证件类型</Label>
                             <Picker style={{width: WIDTH/2}} enabled={false}
-                                    selectedValue={this.state.type}
-                                    onValueChange={(lang) => this.setState({type: lang})}>
+                                    selectedValue={this.state.certificate_type}
+                                    onValueChange={(lang) => this.setState({certificate_type: lang})}>
                                 <Picker.Item label="营业执照" value="1" />
                             </Picker>
                         </Item>
                         <Item fixedLabel>
                             <Label>证件号码</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({firm_name: e})}/>
                         </Item>
                         <Item fixedLabel>
                             <Label>优势领域</Label>
@@ -88,21 +107,21 @@ export default class Cooperation extends Component {
                         </Item>
                         <Item fixedLabel>
                             <Label>负责人</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({principal: e})}/>
                         </Item>
                         <Item fixedLabel>
                             <Label>联系人</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({contacts: e})}/>
                         </Item>
                         <Item fixedLabel>
                             <Label>手机号</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({phone: e})}/>
                         </Item>
                         <Item fixedLabel >
                             <Label>律所规模</Label>
                             <Picker style={{width: WIDTH/2}}
-                                    selectedValue={this.state.type}
-                                    onValueChange={(lang) => this.setState({type: lang})}>
+                                    selectedValue={this.state.scale}
+                                    onValueChange={(lang) => this.setState({scale: lang})}>
                                 <Picker.Item label="1-10人" value="1" />
                                 <Picker.Item label="10-30人" value="2" />
                                 <Picker.Item label="30-50人" value="3" />
@@ -147,6 +166,24 @@ export default class Cooperation extends Component {
                 </Footer>
             </Container>
         )
+    }
+
+    _sub() {
+        if(!User) {
+            err('请登录');
+            return
+        }
+        const s = this.state;
+        if(!s.area.a || !s.certificate_number || !s.firm_name || !s.type || !s.advantage || !s.principal || !s.phone || !s.contacts) {
+            err('请填完以上信息');
+            return
+        }
+        POST(METHOD.cooperation, `firm_name=${s.firm_name}&type=${s.type}&certificate_type=${s.certificate_type}&certificate_number=${s.certificate_number}
+        &advantage=${s.advantage}&province=${s.area.city}&city=${s.area.a}&area=${s.area.c}&principal=${s.principal}&phone=${s.phone}
+        &scale=${s.scale}&url=${s.url}&user_id=${User.id}&contacts=${s.contacts}`)
+            .then(rs=>{
+                console.log(rs);
+            })
     }
 
     _createAreaData(n) {

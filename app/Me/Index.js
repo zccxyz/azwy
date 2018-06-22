@@ -29,6 +29,7 @@ export default class Index extends Component {
 
     componentDidMount() {
         this.deEmitter = DeviceEventEmitter.addListener('User', (a) => {
+            User = a;
             if(a) {
                 this.setState({user: a, zt: 2});
             }else{
@@ -66,7 +67,7 @@ export default class Index extends Component {
                         <ListItem onPress={()=>navigate(this.state.zt==1?'Login':'Info')}>
                             {this.state.zt==2?<Thumbnail large source={require('../img/1.jpg')}/>:<Icon name={'ios-person-outline'} style={{fontSize: 60, color: 'white'}}/>}
                             <Body>
-                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.name}</Text>:<Text style={{color: Color.meFontColor}}>立即登录</Text>}
+                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.nickname}</Text>:<Text style={{color: Color.meFontColor}}>立即登录</Text>}
                                 {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.phone}</Text>:<Text style={{color: Color.meFontColor}} note>登录后享受更多特权</Text>}
                             </Body>
                             <Right>

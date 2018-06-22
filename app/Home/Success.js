@@ -67,7 +67,7 @@ export default class Success extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>navigate('Apply2')}>
+                        <Button full onPress={()=>navigate('Home')}>
                             <Text style={{color: 'white', fontSize: 15}}>确 定</Text>
                         </Button>
                     </FooterTab>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, Picker, TouchableOpacity,
+    View, Picker, TouchableOpacity, FlatList,
 } from 'react-native';
 import {
     Container,
@@ -27,6 +27,7 @@ export default class Index extends Component {
         super(props);
         this.state = {
             area: '',
+            list: [],
         };
     }
 
@@ -37,6 +38,10 @@ export default class Index extends Component {
             data.push(area[i].name);
         }
         return data;
+    }
+
+    componentDidMount() {
+        this._getCase();
     }
 
     _change() {
@@ -78,21 +83,8 @@ export default class Index extends Component {
                 </Header>
 
                 <Content>
-                    <TouchableOpacity onPress={()=>navigate('CaseInfo2')}>
-                        <View style={{height: 80, flexDirection:'row',elevation: 1, backgroundColor: 'white', marginBottom:5}}>
-                            <View style={{flex: 4,justifyContent:'space-between', padding:5}}>
-                                <Text>阿里巴巴科技有限公司合同纠纷案</Text>
-                                <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
-                                    <Text style={{fontSize:13, color:'gray'}}>带委托</Text>
-                                    <Text style={{fontSize:13, color:'gray'}}>北京市某某法院</Text>
-                                </View>
-                            </View>
-                            <View style={{flex: 1, backgroundColor: Color.navColor, justifyContent:'center', alignItems:'center'}}>
-                                <Text style={{color: 'white', fontSize:25}}>10</Text>
-                                <Text style={{color: 'white'}}>万元</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                    <FlatList data={this.state.list} renderItem={({item})=>this._item(item)}
+                              keyExtractor={(v, k)=>k} extraData={this.state}/>
                 </Content>
 
                 <Fab
@@ -105,5 +97,37 @@ export default class Index extends Component {
                 </Fab>
             </Container>
         )
+    }
+
+    _item(v) {
+        return(
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('CaseInfo2', {data: v})}>
+                <View style={{height: 80, flexDirection:'row',elevation: 1, backgroundColor: 'white', marginBottom:5}}>
+                    <View style={{flex: 4,justifyContent:'space-between', padding:5}}>
+                        <Text>{v.defendant}{v.type}</Text>
+                        <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
+                            <Text style={{fontSize:13, color:'gray'}}>带委托</Text>
+                            <Text style={{fontSize:13, color:'gray'}}>{v.court}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, backgroundColor: Color.navColor, justifyContent:'center', alignItems:'center'}}>
+                        <Text style={{color: 'white', fontSize:25}}>{v.money/1000}</Text>
+                        <Text style={{color: 'white'}}>万元</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    _getCase() {
+        POST(METHOD.apply, `class=select`)
+            .then(rs=>{
+                if(rs.code==1) {
+                    this.setState({list: rs.data});
+                }else{
+                    err(rs.data);
+                }
+                console.log(rs);
+            })
     }
 }

@@ -107,7 +107,7 @@ export default class Apply extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>navigate(this.state.type3===4?'Apply3':'Apply2')}>
+                        <Button full onPress={()=>navigate(this.state.type3===4?'Apply3':'Apply2', {type: this.state.type3})}>
                             <Text style={{color: 'white', fontSize: 15}}>下一步</Text>
                         </Button>
                     </FooterTab>
