@@ -21,6 +21,28 @@ import {
 import Color from "../Color";
 
 export default class Code extends Component {
+    constructor(props) {
+        super(props);
+        this.state={
+            url: '',
+        };
+    }
+
+    componentDidMount() {
+        this._get();
+    }
+
+    _get() {
+        POST(METHOD.my_qrcode, `id=${User.id}`).then(rs=>{
+            if(rs.code==1){
+                this.setState({url: rs.data})
+            }else{
+                err(rs.data);
+            }
+            //console.log(rs);
+        })
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -37,7 +59,7 @@ export default class Code extends Component {
 
                 <Content>
                     <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={require('../img/code.png')}/>
+                        <Thumbnail style={{width: 200, height: 200, marginBottom:10}} square source={{uri: this.state.url}}/>
                         <Text>我的二维码</Text>
                     </View>
                 </Content>

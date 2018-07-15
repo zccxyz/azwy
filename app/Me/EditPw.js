@@ -44,8 +44,8 @@ export default class EditName extends Component {
                 </Header>
 
                 <Content style={{backgroundColor: Color.listColor}}>
-                    <Item style={{marginBottom: 10}}><Input placeholder="旧密码" onChangeText={e=>this.setState({pw: e})}/></Item>
-                    <Item style={{marginBottom: 10}}><Input placeholder="新密码" onChangeText={e=>this.setState({new: e})}/></Item>
+                    <Item style={{marginBottom: 10}}><Input secureTextEntry placeholder="旧密码" onChangeText={e=>this.setState({pw: e})}/></Item>
+                    <Item style={{marginBottom: 10}}><Input secureTextEntry placeholder="新密码" onChangeText={e=>this.setState({new: e})}/></Item>
                     <Button block style={{marginBottom: 10}} onPress={()=>this._editPw()}>
                         <Text>确认修改</Text>
                     </Button>
@@ -59,15 +59,14 @@ export default class EditName extends Component {
             err('请填写用户名');
             return
         }
-        POST(METHOD.amend, `password=${this.state.pw}&newPassword=${this.state.new}&type=2&id=${User.id}`)
+        POST(METHOD.amend, `password=${this.state.pw}&newPassword=${this.state.new}&type=1&id=${User.id}`)
             .then(rs=>{
-                console.log(rs);
-                /*if(rs.code==1) {
+                if(rs.code==1) {
                     msg('修改成功');
                     this.props.navigation.goBack();
                 }else{
                     err(rs.data);
-                }*/
+                }
             })
     }
 }

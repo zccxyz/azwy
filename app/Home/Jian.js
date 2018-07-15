@@ -95,7 +95,17 @@ export default class Jian extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>navigate('Apply', {type: this.state.type})}>
+                        <Button full onPress={()=>{
+                            if(User){
+                                if(this.state.type == 4 && User.status != 2) {
+                                    err('您还不是律师，请在个人中心升级为律师!');
+                                    return;
+                                }
+                                navigate('Apply', {type: this.state.type})
+                            }else{
+                                navigate('Login')
+                            }
+                        }}>
                             <Text style={{color: 'white', fontSize: 15}}>
                                 立即申请{this.state.type===1?'案件诊断':null}
                                 {this.state.type===2?'垫资诉讼':null}

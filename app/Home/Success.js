@@ -30,6 +30,35 @@ export default class Success extends Component {
         }
     }
 
+    componentDidMount() {
+        SAVE.load({
+            key: 'msg',
+        }).then(rs=>{
+            let arr = rs;
+            arr.unshift({time: this._getTime()});
+            SAVE.save({
+                key: 'msg',
+                data: arr,
+            })
+            console.log(rs)
+        }).catch(e=>{
+            SAVE.save({
+                key: 'msg',
+                data: [{time: this._getTime()}],
+            })
+        });
+    }
+
+    _getTime() {
+        let t = new Date();
+        let y = t.getFullYear();
+        let m = t.getMonth()+1;
+        let d = t.getDate();
+        let h = t.getHours();
+        let min = t.getMinutes();
+        return y+'-'+m+'-'+d+' '+h+':'+min;
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(

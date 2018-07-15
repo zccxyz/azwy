@@ -20,6 +20,7 @@ class Login1 extends Component {
         };
     }
 
+
     _login() {
         const state = this.state;
         if (state.tel.length != 11) {
@@ -39,7 +40,6 @@ class Login1 extends Component {
                 });
                 DeviceEventEmitter.emit('User', rs.data);
                 this.props.navigation.navigate('MeIndex');
-                console.log(rs);
             }else{
                 msg(rs.data);
             }
@@ -74,6 +74,15 @@ class Login1 extends Component {
 }
 
 class Login2 extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tel: '',
+            yzm: '',
+            time: 0,
+        };
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return (
@@ -82,18 +91,22 @@ class Login2 extends Component {
                 <Content style={{backgroundColor: Color.listColor}}>
                     <Form style={{marginBottom: 10}}>
                         <Item>
-                            <Input placeholder="手机号"/>
+                            <Input placeholder="手机号" onChangeText={e => this.setState({tel: e})} keyboardType={'numeric'}/>
                         </Item>
                         <Item last>
-                            <Input placeholder="验证码"/>
+                            <Input placeholder="验证码" keyboardType={'numeric'} onChangeText={e => this.setState({yzm: e})}/>
                             <Right>
-                                <Button bordered small>
-                                    <Text>发送验证码</Text>
-                                </Button>
+                                {this.state.time > 0 ?
+                                    <Button bordered small>
+                                        <Text>{this.state.time}秒</Text>
+                                    </Button> :
+                                    <Button bordered small onPress={() => this._send()}>
+                                        <Text>发送验证码</Text>
+                                    </Button>}
                             </Right>
                         </Item>
                     </Form>
-                    <Button block style={{marginBottom: 10}} onPress={()=>goBack()}>
+                    <Button block style={{marginBottom: 10}} onPress={()=>this._login()}>
                         <Text>登录</Text>
                     </Button>
                     <Button bordered block onPress={() => navigate('Reg')}>
@@ -102,6 +115,52 @@ class Login2 extends Component {
                 </Content>
             </Container>
         )
+    }
+
+    _login() {
+        if(this.state.tel.length!=11 || !this.state.yzm) {
+            msg('请填完以上内容');
+            return;
+        }
+        POST(METHOD.verify_login, `code=${this.state.yzm}&phone=${this.state.tel}`).then(rs=>{
+            if(rs.code==1){
+                SAVE.save({
+                    key: 'user',
+                    data: rs.data,
+                });
+                msg('登录成功');
+                DeviceEventEmitter.emit('User', rs.data);
+                this.props.navigation.navigate('MeIndex');
+            }else{
+                err(rs.data);
+            }
+            //console.log(rs)
+        })
+    }
+
+    _send() {
+        if(this.state.tel.length!=11) {
+            msg('请正确填写手机号码');
+            return;
+        }
+        //POST(METHOD.sms, `phone=${this.state.tel}`);
+        fetch(YM + METHOD.sms, {
+            method: 'POST', body: `phone=${this.state.tel}`, headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).then((response) => {
+            if (response.status == 200) {
+                this.setState({time: 60});
+                setInterval(()=>{
+                    if(this.state.time>0){
+                        this.setState({time: this.state.time-1})
+                    }
+                    clearInterval();
+                }, 1000);
+            }
+        }).catch(e => {
+            console.log(e, '失败');
+        });
     }
 }
 

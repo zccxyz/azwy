@@ -60,12 +60,26 @@ export default class Apply4 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>alert('提交成功')}>
+                        <Button full onPress={()=>this._sub()}>
                             <Text style={{color: 'white', fontSize: 15}}>提交申请</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
             </Container>
         )
+    }
+
+    _sub() {
+        const s = this.props.navigation.state.params;
+        POST(METHOD.assets, `class=add&profession=${s.certificate}&proposer=${s.user_name}&attorney_name=${s.lawyer_name}&phone=${s.phone}&uid=${User.id}
+        &name=${s.name}&assets_name=${s.assets_name}&assets_price=${s.assets_price}&total_price=${s.total_price}&mortgage=${JSON.stringify(s.list)}&original=${s.original}&cooperation=${s.cooperation}`)
+            .then(rs=>{
+                if(rs.code==1){
+                    msg('提交成功');
+                    this.props.navigation.navigate('HomeIndex');
+                }else{
+                    err(rs.data)
+                }
+            });
     }
 }

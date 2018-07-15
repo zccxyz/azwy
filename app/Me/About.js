@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View
+    View, NativeModules, DeviceEventEmitter, ToastAndroid
 } from 'react-native';
 import {
     Container,
@@ -21,14 +21,20 @@ import {
 import Color from "../Color";
 
 export default class About extends Component {
+    componentWillMount() {
+        this._check();
+    }
+
+
     render() {
         const {navigate, goBack} = this.props.navigation;
-        return(
+        return (
             <Container style={{flex: 1}}>
                 <Header style={{backgroundColor: Color.navColor}} androidStatusBarColor={Color.navColor}
                         noShadow={true}>
                     <Left>
-                        <Icon onPress={()=>goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'} type={'Entypo'}/>
+                        <Icon onPress={() => goBack()} style={{color: Color.listColor}} name={'chevron-thin-left'}
+                              type={'Entypo'}/>
                     </Left>
                     <Body>
                     <Title>关于我们</Title>
@@ -36,7 +42,7 @@ export default class About extends Component {
                 </Header>
 
                 <Content style={{backgroundColor: 'white'}}>
-                    <View style={{height: 50, justifyContent:'center', alignItems:'center'}}>
+                    <View style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
                         <H1>安枕无忧简介</H1>
                     </View>
                     <View style={{padding: 20, justifyContent: 'center'}}>
@@ -46,12 +52,12 @@ export default class About extends Component {
                             由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
                         </Text>
                     </View>
-                    <View style={{height: 50, justifyContent:'center', alignItems:'center'}}>
+                    <View style={{height: 50, justifyContent: 'center', alignItems: 'center'}}>
                         <Text>当前版本：1.0.0</Text>
                     </View>
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
                         <View>
-                            <Button>
+                            <Button onPress={() => this._check()}>
                                 <Text>检测更新</Text>
                             </Button>
                         </View>
@@ -59,12 +65,25 @@ export default class About extends Component {
                 </Content>
 
                 <Footer style={{backgroundColor: 'white'}}>
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
                         <Text>Copyright 2015-2018</Text>
                         <Text>安枕无忧版权所有</Text>
                     </View>
                 </Footer>
             </Container>
         )
+    }
+
+    _check() {
+        POST(METHOD.release, "name=1.0.0&class=select")
+            .then(rs=>{
+                if(rs.code==1){
+                    NativeModules.DownloadApk.downloading(rs.data, "update.apk");
+                }else{
+                    msg('暂无新版本');
+                }
+               //console.log(rs)
+            });
+        //NativeModules.DownloadApk.downloading("http://gdown.baidu.com/data/wisegame/514060bd1b715ddc/tengxunshipin_16028.apk", "azwy.apk");
     }
 }

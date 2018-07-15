@@ -38,6 +38,12 @@ export default class Apply2 extends Component {
             abstract: '',
             arr: [],
             apply_type: 1,
+
+            reference_number: '',
+            deadline: '',
+            gist: '',
+            judge: '',
+            property: '',
         }
     }
 
@@ -103,6 +109,39 @@ export default class Apply2 extends Component {
                             <Label>案件标的</Label>
                             <Input placeholder={'请填写案件标的（元）'} onChangeText={e=>this.setState({money: e})}/>
                         </Item>
+                        {this.state.phase>1?(
+                            <View>
+                                <Item fixedLabel>
+                                    <Label>案号</Label>
+                                    <Input placeholder={'请填写案号'} onChangeText={e=>this.setState({reference_number: e})}/>
+                                </Item>
+                                <Item fixedLabel>
+                                    <Label>拟结案期限</Label>
+                                    <Input placeholder={'请填写拟结案期限（月）'} onChangeText={e=>this.setState({deadline: e})}/>
+                                </Item>
+                            </View>
+                        ):null}
+                        {this.state.phase==5?(
+                            <View>
+                                <Item fixedLabel>
+                                    <Label>依据案号</Label>
+                                    <Input placeholder={'请填写依据案号'} onChangeText={e=>this.setState({gist: e})}/>
+                                </Item>
+                                <Item fixedLabel>
+                                    <Label>承办法官</Label>
+                                    <Input placeholder={'请填写承办法官'} onChangeText={e=>this.setState({judge: e})}/>
+                                </Item>
+                                <Item fixedLabel >
+                                    <Label>是否有财产线</Label>
+                                    <Picker style={{width: WIDTH/2}}
+                                            selectedValue={this.state.property}
+                                            onValueChange={(lang) => this.setState({property: lang})}>
+                                        <Picker.Item label="否" value="2" />
+                                        <Picker.Item label="是" value="1" />
+                                    </Picker>
+                                </Item>
+                            </View>
+                        ):null}
                         <Item fixedLabel >
                             <Label>是否有律师</Label>
                             <Picker style={{width: WIDTH/2}}
@@ -136,9 +175,15 @@ export default class Apply2 extends Component {
             return
         }
         const s = this.state;
-        if(!s.plaintiff || !s.defendant || !s.court || !s.money || !s.abstract || !s.phase || !s.type) {
+        if(!s.plaintiff || !s.defendant || !s.court || !s.money || !s.phase || !s.type) {
             err('请填完以上信息');
             return
+        }
+        if(s.phase>1) {
+            if(!s.reference_number){
+                msg('案号不能为空');
+                return
+            }
         }
         POST(METHOD.apply, `plaintiff=${s.plaintiff}&defendant=${s.defendant}&court=${s.court}&money=${s.money}
         is_lawyer=${s.is_lawyer}&abstract=${s.abstract}&phase=${s.phase}&user_id=${User.id}&class=add&type=${s.type}

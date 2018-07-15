@@ -29,9 +29,49 @@ export default class Apply4 extends Component {
             list: [
                 {content: 0, classify: 0, city: '', a: '', c: '', detail: '', money: ''}
             ],
-            name: '',
             method: 0,
+            mortgage_type: [],
+            mortgage: [],
+            original: '',
+            cooperation: 0,
+
+            certificate: '',
+            user_name: '',
+            lawyer_name: '',
+            phone: '',
+
+            name: '',
+            assets_name: '',
+            assets_price: '',
+            total_price: '',
         }
+    }
+
+    componentDidMount() {
+        this._getMortgage();
+        this._getType();
+    }
+
+    _getMortgage() {
+        POST(METHOD.mortgage, `class=select`)
+            .then(rs=>{
+                if(rs.code==1){
+                    this.setState({mortgage: rs.data});
+                }else{
+                    err(rs.data)
+                }
+            });
+    }
+
+    _getType() {
+        POST(METHOD.mortgage_type, `class=select`)
+            .then(rs=>{
+                if(rs.code==1){
+                    this.setState({mortgage_type: rs.data});
+                }else{
+                    err(rs.data)
+                }
+            });
     }
 
     _add() {
@@ -67,16 +107,16 @@ export default class Apply4 extends Component {
                     <Form style={{backgroundColor: 'white'}}>
                         <Item fixedLabel>
                             <Label style={{fontSize: 16}}>原债权人</Label>
-                            <Input defaultValue={this.state.name} onChangeText={e=>{
-                                this.setState({name: e})
+                            <Input defaultValue={this.state.original} onChangeText={e=>{
+                                this.setState({original: e})
                             }}/>
                         </Item>
                         <Item fixedLabel>
                             <Label style={{fontSize: 16}}>合作方式</Label>
                             <Picker style={{width: WIDTH-130}} enabled={true}
-                                    selectedValue={this.state.method}
+                                    selectedValue={this.state.cooperation}
                                     onValueChange={(e) => {
-                                        this.setState({method: e});
+                                        this.setState({cooperation: e});
                                     }}>
                                 <Picker.Item label="--请选择合作方式--" value="0" />
                                 <Picker.Item label="联合收购" value="1" />
@@ -90,7 +130,7 @@ export default class Apply4 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>navigate('Apply5')}>
+                        <Button full onPress={()=>this._next()}>
                             <Text style={{color: 'white', fontSize: 15}}>下一步</Text>
                         </Button>
                     </FooterTab>
@@ -111,14 +151,9 @@ export default class Apply4 extends Component {
                                 this.setState({list: this.state.list});
                             }}>
                         <Picker.Item label="--请选择抵押内容--" value="0" />
-                        <Picker.Item label="工业土地" value="1" />
-                        <Picker.Item label="农业土地" value="2" />
-                        <Picker.Item label="商业土地" value="3" />
-                        <Picker.Item label="工业厂房" value="4" />
-                        <Picker.Item label="设备" value="5" />
-                        <Picker.Item label="住宅" value="6" />
-                        <Picker.Item label="商铺" value="7" />
-                        <Picker.Item label="写字楼" value="8" />
+                        {this.state.mortgage.map((v, k)=>{
+                            return <Picker.Item key={k} label={v.name} value={v.id} />
+                        })}
                     </Picker>
                 </Item>
                 <Item fixedLabel>
@@ -130,11 +165,9 @@ export default class Apply4 extends Component {
                                 this.setState({list: this.state.list});
                             }}>
                         <Picker.Item label="--请选择抵押物类型--" value="0" />
-                        <Picker.Item label="动产抵押" value="1" />
-                        <Picker.Item label="不动产抵押" value="2" />
-                        <Picker.Item label="权利抵押" value="3" />
-                        <Picker.Item label="共同抵押" value="4" />
-                        <Picker.Item label="最高额抵押" value="5" />
+                        {this.state.mortgage_type.map((v, k)=>{
+                            return <Picker.Item key={k} label={v.name} value={v.id} />
+                        })}
                     </Picker>
                 </Item>
                 <Item fixedLabel>
@@ -154,7 +187,7 @@ export default class Apply4 extends Component {
                     <Label style={{fontSize: 16}}>抵押物金额</Label>
                     <Input defaultValue={v.money} onChangeText={e=>{
                         this.state.list[k]['money'] = e;
-                        this.setState({list: this.state.money})
+                        this.setState({list: this.state.list})
                     }}/>
                     {this.state.list.length>1?<Icon name={'ios-trash-outline'} style={{fontSize: 35}} onPress={()=>this._del(k)}/>:null}
                 </Item>
@@ -202,5 +235,24 @@ export default class Apply4 extends Component {
             }
         });
         Picker2.show();
+    }
+
+    _next(){
+        const s = this.state;
+        const p = this.props.navigation.state.params;
+        if(!s.original || !s.cooperation){
+            msg('请填完以上信息');
+            return;
+        }
+        for(let v of s.list){
+            if(!v.content || !v.classify || !v.city || !v.a || !v.c || !v.detail || !v.money){
+                msg('请填完以上信息');
+                return;
+            }
+        }
+        this.props.navigation.navigate('Apply5', {
+            list: s.list, certificate: p.certificate, user_name: p.user_name, lawyer_name: p.lawyer_name, phone: p.phone,
+            name: p.name, assets_name: p.assets_name, assets_price: p.assets_price, total_price: p.total_price, original: s.original, cooperation: s.cooperation
+        })
     }
 }

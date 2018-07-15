@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    DeviceEventEmitter,
+    DeviceEventEmitter, View
 } from 'react-native';
 import {
     Container,
@@ -68,7 +68,7 @@ export default class Index extends Component {
                             {this.state.zt==2?<Thumbnail large source={require('../img/1.jpg')}/>:<Icon name={'ios-person-outline'} style={{fontSize: 60, color: 'white'}}/>}
                             <Body>
                                 {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.nickname}</Text>:<Text style={{color: Color.meFontColor}}>立即登录</Text>}
-                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.phone}</Text>:<Text style={{color: Color.meFontColor}} note>登录后享受更多特权</Text>}
+                                {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.tel}</Text>:<Text style={{color: Color.meFontColor}} note>登录后享受更多特权</Text>}
                             </Body>
                             <Right>
                                 <Icon style={{color: Color.meFontColor}} name={'chevron-thin-right'} type={'Entypo'}/>
@@ -77,40 +77,68 @@ export default class Index extends Component {
                     </List>
 
                     <List style={{backgroundColor: Color.listColor}}>
-                        <ListItem icon onPress={()=>navigate('MyCase')}>
-                            <Left>
-                                <Icon name="documents" type={'Entypo'} style={{fontSize: 20, color: Color.navColor}}/>
-                            </Left>
-                            <Body>
-                                <Text>我的案件</Text>
-                            </Body>
-                            <Right>
-                                <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
-                            </Right>
-                        </ListItem>
-                        <ListItem icon onPress={()=>navigate('Bad')}>
-                            <Left>
-                                <Icon name="emoji-sad" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
-                            </Left>
-                            <Body>
-                            <Text>我的不良资产</Text>
-                            </Body>
-                            <Right>
-                                <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
-                            </Right>
-                        </ListItem>
-                        <ListItem icon onPress={()=>navigate('Accept')}>
-                            <Left>
-                                <Icon name="md-person" style={{fontSize: 20, color: Color.navColor}} type={'Ionicons'}/>
-                            </Left>
-                            <Body>
-                            <Text>我承接的案源</Text>
-                            </Body>
-                            <Right>
-                                <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
-                            </Right>
-                        </ListItem>
-                        <ListItem icon onPress={()=>navigate('Keep')}>
+                        {!User || User.status==2?(
+                            <View>
+                                <ListItem icon onPress={()=>{
+                                    if(User){
+                                        navigate('MyCase')
+                                    }else {
+                                        navigate('Login')
+                                    }
+                                }}>
+                                    <Left>
+                                        <Icon name="documents" type={'Entypo'} style={{fontSize: 20, color: Color.navColor}}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>我的案件</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
+                                    </Right>
+                                </ListItem>
+                                <ListItem icon onPress={()=>{
+                                    if(User){
+                                        navigate('Bad')
+                                    }else {
+                                        navigate('Login')
+                                    }
+                                }}>
+                                    <Left>
+                                        <Icon name="emoji-sad" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>我的不良资产</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
+                                    </Right>
+                                </ListItem>
+                                <ListItem icon onPress={()=>{
+                                    if(User){
+                                        navigate('Accept')
+                                    }else {
+                                        navigate('Login')
+                                    }
+                                }}>
+                                    <Left>
+                                        <Icon name="md-person" style={{fontSize: 20, color: Color.navColor}} type={'Ionicons'}/>
+                                    </Left>
+                                    <Body>
+                                    <Text>我承接的案源</Text>
+                                    </Body>
+                                    <Right>
+                                        <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
+                                    </Right>
+                                </ListItem>
+                            </View>
+                        ):null}
+                        <ListItem icon onPress={()=>{
+                            if(User){
+                                navigate('Keep')
+                            }else {
+                                navigate('Login')
+                            }
+                        }}>
                             <Left>
                                 <Icon name="heart" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                             </Left>
@@ -121,7 +149,13 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon onPress={()=>navigate('Message')}>
+                        <ListItem icon onPress={()=>{
+                            if(User){
+                                navigate('Message')
+                            }else {
+                                navigate('Login')
+                            }
+                        }}>
                             <Left>
                                 <Icon name="message" style={{fontSize: 20, color: Color.navColor}} type={'Entypo'}/>
                             </Left>
@@ -132,7 +166,13 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon onPress={()=>navigate('Code')}>
+                        <ListItem icon onPress={()=>{
+                            if(User){
+                                navigate('Code')
+                            }else {
+                                navigate('Login')
+                            }
+                        }}>
                             <Left>
                                 <Icon name="qrcode" style={{fontSize: 20, color: Color.navColor}} type={'FontAwesome'}/>
                             </Left>
@@ -143,7 +183,13 @@ export default class Index extends Component {
                                 <Icon style={{color: Color.meListColor}} name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>
                         </ListItem>
-                        <ListItem icon onPress={()=>navigate('Cooperation')}>
+                        <ListItem icon onPress={()=>{
+                            if(User){
+                                navigate('Cooperation')
+                            }else {
+                                navigate('Login')
+                            }
+                        }}>
                             <Left>
                                 <Icon name="handshake-o" style={{fontSize: 20, color: Color.navColor}} type={'FontAwesome'}/>
                             </Left>

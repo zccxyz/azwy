@@ -21,17 +21,45 @@ import {
 import Color from "../Color";
 import {TabNavigator, StackNavigator} from "react-navigation";
 
+let sj = '';
 class Sp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: 0,
+            data: '',
+        };
+    }
+
+    componentDidMount() {
+        this.setState({id: this.props.navigation.state.params?this.props.navigation.state.params.id:0});
+        this._find(this.props.navigation.state.params.id);
+    }
+
+    _find(id) {
+        POST(METHOD.apply, `class=find&id=${id}`).then(rs=>{
+            if(rs.code==1){
+                sj = rs.data;
+                console.log(sj, '我的')
+                this.setState({data: rs.data});
+            }else{
+                err(rs.data);
+            }
+        })
+    }
 
     render() {
+        const s = this.state.data;
         const {navigate}=this.props.navigation;
         return(
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <View style={{justifyContent:'space-between', padding:10, flexDirection:'row', paddingLeft:20, paddingRight:20}}>
-                        <Text>已提交</Text>
-                        <Text>申请时间：2018-05-25</Text>
+                        <Text>{s.audit_type==0?'待审核':''}
+                            {s.audit_type==1?'审核通过':''}
+                            {s.audit_type==2?'审核不通过':''}</Text>
+                        <Text>申请时间：{s.creation_time}</Text>
                     </View>
                     <Text style={{backgroundColor:"#ccc", height:0.5}}/>
 
@@ -42,7 +70,7 @@ class Sp extends React.Component {
                             </Left>
                             <View style={{width: WIDTH-150}}>
                                 <Text style={{paddingLeft: 20, fontSize:14}}>
-                                    由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
+                                    {s.letter}
                                 </Text>
                             </View>
                         </ListItem>
@@ -53,7 +81,7 @@ class Sp extends React.Component {
                             </Left>
                             <View style={{width: WIDTH-150}}>
                                 <Text style={{paddingLeft: 20, fontSize:14}}>
-                                    由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
+                                    {s.audit_letter}
                                 </Text>
                             </View>
                         </ListItem>
@@ -65,15 +93,31 @@ class Sp extends React.Component {
 }
 
 class Aj extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: '',
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.setState({data: sj})
+        }, 500)
+    }
+
     render() {
         const {navigate}=this.props.navigation;
+        const s = this.state.data;
         return(
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <View style={{justifyContent:'space-between', padding:10, flexDirection:'row', paddingLeft:20, paddingRight:20}}>
-                        <Text>已提交</Text>
-                        <Text>申请时间：2018-05-25</Text>
+                        <Text>{s.audit_type==0?'待审核':''}
+                            {s.audit_type==1?'审核通过':''}
+                            {s.audit_type==2?'审核不通过':''}</Text>
+                        <Text>申请时间：{s.creation_time}</Text>
                     </View>
                     <Text style={{backgroundColor:"#ccc", height:0.5}}/>
 
@@ -83,7 +127,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿达是打发
+                                {s.plaintiff}
                             </Text>
                         </View>
                     </ListItem>
@@ -93,7 +137,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.defendant}
                             </Text>
                         </View>
                     </ListItem>
@@ -103,7 +147,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.type_name}
                             </Text>
                         </View>
                     </ListItem>
@@ -113,7 +157,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                由各行业知名律师制定出诉讼和执行的标椎化模板，免费为企业，个人快速诊断出案件症结所在
+                                {s.abstract}
                             </Text>
                         </View>
                     </ListItem>
@@ -123,7 +167,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.reference_number}
                             </Text>
                         </View>
                     </ListItem>
@@ -133,7 +177,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                8 个月
+                                {s.deadline} 个月
                             </Text>
                         </View>
                     </ListItem>
@@ -143,7 +187,12 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                立案
+                                {s.phase==1?'未立案':''}
+                                {s.phase==2?'一审':''}
+                                {s.phase==3?'二审':''}
+                                {s.phase==4?'重审':''}
+                                {s.phase==5?'执行':''}
+                                {s.phase==6?'再审':''}
                             </Text>
                         </View>
                     </ListItem>
@@ -153,7 +202,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.court}
                             </Text>
                         </View>
                     </ListItem>
@@ -163,7 +212,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.user_name}
                             </Text>
                         </View>
                     </ListItem>
@@ -173,7 +222,7 @@ class Aj extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                阿里巴巴公司
+                                {s.lawyer_name}
                             </Text>
                         </View>
                     </ListItem>
@@ -184,15 +233,31 @@ class Aj extends Component {
 }
 
 class Fy extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: '',
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.setState({data: sj})
+        }, 500)
+    }
+
     render() {
+        const s = this.state.data;
         const {navigate}=this.props.navigation;
         return(
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <View style={{justifyContent:'space-between', padding:10, flexDirection:'row', paddingLeft:20, paddingRight:20}}>
-                        <Text>已提交</Text>
-                        <Text>申请时间：2018-05-25</Text>
+                        <Text>{s.audit_type==0?'待审核':''}
+                            {s.audit_type==1?'审核通过':''}
+                            {s.audit_type==2?'审核不通过':''}</Text>
+                        <Text>申请时间：{s.creation_time}</Text>
                     </View>
                     <Text style={{backgroundColor:"#ccc", height:0.5}}/>
 
@@ -202,7 +267,7 @@ class Fy extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                5.00 元
+                                {s.money} 元
                             </Text>
                         </View>
                     </ListItem>
@@ -213,15 +278,31 @@ class Fy extends Component {
 }
 
 class Zl extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: '',
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.setState({data: sj})
+        }, 500)
+    }
+
     render() {
+        const s = this.state.data;
         const {navigate}=this.props.navigation;
         return(
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <View style={{justifyContent:'space-between', padding:10, flexDirection:'row', paddingLeft:20, paddingRight:20}}>
-                        <Text>已提交</Text>
-                        <Text>申请时间：2018-05-25</Text>
+                        <Text>{s.audit_type==0?'待审核':''}
+                            {s.audit_type==1?'审核通过':''}
+                            {s.audit_type==2?'审核不通过':''}</Text>
+                        <Text>申请时间：{s.creation_time}</Text>
                     </View>
                     <Text style={{backgroundColor:"#ccc", height:0.5}}/>
 
@@ -242,15 +323,31 @@ class Zl extends Component {
 }
 
 class Gr extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: '',
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(()=>{
+            this.setState({data: sj})
+        }, 500)
+    }
+
     render() {
+        const s = this.state.data;
         const {navigate}=this.props.navigation;
         return(
             <Container style={{flex: 1}}>
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <View style={{justifyContent:'space-between', padding:10, flexDirection:'row', paddingLeft:20, paddingRight:20}}>
-                        <Text>已提交</Text>
-                        <Text>申请时间：2018-05-25</Text>
+                        <Text>{s.audit_type==0?'待审核':''}
+                            {s.audit_type==1?'审核通过':''}
+                            {s.audit_type==2?'审核不通过':''}</Text>
+                        <Text>申请时间：{s.creation_time}</Text>
                     </View>
                     <Text style={{backgroundColor:"#ccc", height:0.5}}/>
 
@@ -260,7 +357,7 @@ class Gr extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                test
+                                {User.user_name}
                             </Text>
                         </View>
                     </ListItem>
@@ -280,7 +377,7 @@ class Gr extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                1324156456456
+                                {User.certificate}
                             </Text>
                         </View>
                     </ListItem>
@@ -290,7 +387,7 @@ class Gr extends Component {
                         </Left>
                         <View style={{width: WIDTH-150}}>
                             <Text style={{paddingLeft: 20, fontSize:14}}>
-                                1456456465
+                                {User.phone}
                             </Text>
                         </View>
                     </ListItem>

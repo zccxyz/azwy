@@ -57,7 +57,7 @@ export default class Info extends Component {
                             <Left>
                                 <Text>手机号</Text>
                             </Left>
-                            <Body style={{alignItems: 'flex-end'}}><Text note>{this.state.user.phone}</Text></Body>
+                            <Body style={{alignItems: 'flex-end'}}><Text note>{this.state.user.tel}</Text></Body>
                             <Right style={{alignItems: 'flex-end'}}>
                                 <Icon name={'chevron-thin-right'} type={'Entypo'}/>
                             </Right>

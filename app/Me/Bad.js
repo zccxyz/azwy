@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-    Platform,
+    FlatList,
     StyleSheet,
     View
 } from 'react-native';
@@ -21,6 +21,17 @@ import {
 import Color from "../Color";
 
 export default class Keep extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+        }
+    }
+
+    componentDidMount() {
+        this._getCase()
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -36,28 +47,38 @@ export default class Keep extends Component {
                 </Header>
 
                 <Content>
-                    <List style={{backgroundColor:'white'}}>
-                        <ListItem onPress={()=>navigate('BadInfo')}>
-                            <Body>
-                            <Text>测试</Text>
-                            <Text note>资产包价格：50000.00元</Text>
-                            </Body>
-                            <Right> 
-                                <Icon name={'ios-arrow-forward'}/>
-                            </Right>
-                        </ListItem>
-                        <ListItem onPress={()=>navigate('BadInfo')}>
-                            <Body>
-                            <Text>测试2</Text>
-                            <Text note>资产包价格：52000.00元</Text>
-                            </Body>
-                            <Right>
-                                <Icon name={'ios-arrow-forward'}/>
-                            </Right>
-                        </ListItem>
-                    </List>
+                    <FlatList data={this.state.list} renderItem={({item})=>this._item(item)}
+                              keyExtractor={(v, k)=>k} extraData={this.state}/>
                 </Content>
             </Container>
         )
+    }
+
+    _item(v) {
+        return(
+            <List style={{backgroundColor:'white'}}>
+                <ListItem onPress={()=>this.props.navigation.navigate('BadInfo', {data: v})}>
+                    <Body>
+                    <Text>{v.name}</Text>
+                    <Text note>资产包价格：{v.assets_price}元</Text>
+                    </Body>
+                    <Right>
+                        <Icon name={'ios-arrow-forward'}/>
+                    </Right>
+                </ListItem>
+            </List>
+        )
+    }
+
+    _getCase() {
+        POST(METHOD.assets, `class=myassets&id=${User.id}`)
+            .then(rs=>{
+                if(rs.code==1) {
+                    this.setState({list: rs.data});
+                }else{
+                    err(rs.data);
+                }
+                console.log(rs);
+            })
     }
 }

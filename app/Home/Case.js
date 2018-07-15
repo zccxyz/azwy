@@ -28,6 +28,7 @@ export default class Index extends Component {
         this.state = {
             area: '',
             list: [],
+            zt: false,
         };
     }
 
@@ -66,6 +67,11 @@ export default class Index extends Component {
         Picker2.show();
     }
 
+    _sx() {
+        this.setState({zt: true});
+        this._getCase();
+    }
+
     render() {
         const {navigate, goBack} = this.props.navigation;
         return(
@@ -77,13 +83,13 @@ export default class Index extends Component {
                     <Body>
                     <Title>案件列表</Title>
                     </Body>
-                    <Right>
+                    {/*<Right>
                         <Text style={{color: 'white'}} onPress={()=>this._change()}>{this.state.area==''?'点击选择区域':this.state.area}</Text>
-                    </Right>
+                    </Right>*/}
                 </Header>
 
                 <Content>
-                    <FlatList data={this.state.list} renderItem={({item})=>this._item(item)}
+                    <FlatList onRefresh={()=>this._sx()} refreshing={this.state.zt} data={this.state.list} renderItem={({item})=>this._item(item)}
                               keyExtractor={(v, k)=>k} extraData={this.state}/>
                 </Content>
 
@@ -101,17 +107,23 @@ export default class Index extends Component {
 
     _item(v) {
         return(
-            <TouchableOpacity onPress={()=>this.props.navigation.navigate('CaseInfo2', {data: v})}>
+            <TouchableOpacity onPress={()=>{
+                if(User) {
+                    this.props.navigation.navigate('CaseInfo2', {data: v})
+                }else{
+                    this.props.navigation.navigate('Login')
+                }
+            }}>
                 <View style={{height: 80, flexDirection:'row',elevation: 1, backgroundColor: 'white', marginBottom:5}}>
                     <View style={{flex: 4,justifyContent:'space-between', padding:5}}>
                         <Text>{v.defendant}{v.type}</Text>
                         <View style={{justifyContent:'space-between', alignItems:'center', flexDirection:'row'}}>
-                            <Text style={{fontSize:13, color:'gray'}}>带委托</Text>
+                            <Text style={{fontSize:13, color:'gray'}}>{v.zt==0?'待委托':'已委托'}</Text>
                             <Text style={{fontSize:13, color:'gray'}}>{v.court}</Text>
                         </View>
                     </View>
                     <View style={{flex: 1, backgroundColor: Color.navColor, justifyContent:'center', alignItems:'center'}}>
-                        <Text style={{color: 'white', fontSize:25}}>{v.money/1000}</Text>
+                        <Text style={{color: 'white', fontSize:25}}>{v.money/10000}</Text>
                         <Text style={{color: 'white'}}>万元</Text>
                     </View>
                 </View>
@@ -123,7 +135,7 @@ export default class Index extends Component {
         POST(METHOD.apply, `class=select`)
             .then(rs=>{
                 if(rs.code==1) {
-                    this.setState({list: rs.data});
+                    this.setState({list: rs.data, zt: false});
                 }else{
                     err(rs.data);
                 }

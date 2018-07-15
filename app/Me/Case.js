@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    FlatList,
     Platform,
     StyleSheet,
     View
@@ -48,36 +49,41 @@ export default class Case extends Component {
 
                 <Content>
                     <List>
-                        <ListItem style={{backgroundColor: 'white', marginLeft:0}} onPress={()=>navigate('CaseInfo')}>
-                            <Body>
-                            <Text>买合同纠纷 阿里巴巴 VS 腾讯</Text>
-                            <Text note>案件标的：12万元</Text>
-                            </Body>
-                            <Right style={{flexDirection: 'row'}}>
-                                <Text>已提交</Text>
-                                <Icon name={'chevron-right'} type={'Entypo'}/>
-                            </Right>
-                        </ListItem>
-
-                        <ListItem style={{backgroundColor: 'white', marginLeft:0}} onPress={()=>navigate('CaseInfo')}>
-                            <Body>
-                            <Text>买合同纠纷 阿里巴巴 VS 腾讯</Text>
-                            <Text note>案件标的：12万元</Text>
-                            </Body>
-                            <Right style={{flexDirection: 'row'}}>
-                                <Text>已提交</Text>
-                                <Icon name={'chevron-right'} type={'Entypo'}/>
-                            </Right>
-                        </ListItem>
+                        <FlatList data={this.state.list} renderItem={({item})=>this._item(item)}
+                                  keyExtractor={(v, k)=>k} extraData={this.state}/>
                     </List>
                 </Content>
             </Container>
         )
     }
 
+    _item(v) {
+        return(
+            <ListItem style={{backgroundColor: 'white', marginLeft:0}} onPress={()=>this.props.navigation.navigate('CaseInfo', {id: v.id})}>
+                <Body>
+                <Text>{v.type_name} {v.plaintiff} VS {v.defendant}</Text>
+                <Text note>案件标的：{v.money/10000}万元</Text>
+                </Body>
+                <Right style={{flexDirection: 'row'}}>
+                    <Text>
+                        {v.audit_type==0?'待审核':''}
+                        {v.audit_type==1?'审核通过':''}
+                        {v.audit_type==2?'审核不通过':''}
+                        </Text>
+                    <Icon name={'chevron-right'} type={'Entypo'}/>
+                </Right>
+            </ListItem>
+        )
+    }
+
     _getCase() {
-        POST(METHOD.apply)
+        POST(METHOD.apply, `class=myapply&id=${User.id}`)
             .then(rs=>{
+                if(rs.code==1) {
+                    this.setState({list: rs.data});
+                }else{
+                    err(rs.data);
+                }
                 console.log(rs);
             })
     }

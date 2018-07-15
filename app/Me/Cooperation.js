@@ -29,6 +29,7 @@ export default class Cooperation extends Component {
             type: 1,
             certificate_type: 1,
             zt: false,
+            zt2: false,
             area: {city: '', a: '', c: ''},
 
             firm_name: '',
@@ -38,11 +39,13 @@ export default class Cooperation extends Component {
             scale: 1,
             contacts: '',
             advantage: '',
+            arr: [],
+            url: '',
         }
     }
 
     componentDidMount() {
-        //获取优势领域
+        this._getLy();
     }
 
     _sub() {
@@ -80,7 +83,7 @@ export default class Cooperation extends Component {
                                 <Picker.Item label="请选择" value="0" />
                                 <Picker.Item label="个人所" value="1" />
                                 <Picker.Item label="合伙制" value="2" />
-                                <Picker.Item label="国资所" value="2" />
+                                <Picker.Item label="国资所" value="3" />
                             </Picker>
                         </Item>
                         <Item fixedLabel >
@@ -93,11 +96,11 @@ export default class Cooperation extends Component {
                         </Item>
                         <Item fixedLabel>
                             <Label>证件号码</Label>
-                            <Input onChangeText={e=>this.setState({firm_name: e})}/>
+                            <Input onChangeText={e=>this.setState({certificate_number: e})}/>
                         </Item>
                         <Item fixedLabel>
                             <Label>优势领域</Label>
-                            <Text style={{padding: 20}} onPress={()=>this.setState({zt: true})}>选择您的优势领域</Text>
+                            <Text style={{padding: 20}} onPress={()=>this.setState({zt2: true})}>选择您的优势领域</Text>
                         </Item>
                         <Item fixedLabel>
                             <Label>所在地区</Label>
@@ -131,26 +134,37 @@ export default class Cooperation extends Component {
                         </Item>
                         <Item fixedLabel>
                             <Label>律所网址</Label>
-                            <Input />
+                            <Input onChangeText={e=>this.setState({url: e})}/>
                         </Item>
                     </Form>
                 </Content>
 
-                <Modal animationType={'slide'} onRequestClose={()=>this.setState({zt: false})} transparent={true} visible={this.state.zt}>
+                <Modal animationType={'slide'} onRequestClose={()=>this.setState({zt2: false})} transparent={true} visible={this.state.zt2}>
                     <View style={{backgroundColor: 'rgba(0,0,0,.5)', height: HEIGHT+20, justifyContent: 'center', alignItems: 'center'}}>
                         <View style={{backgroundColor: Color.modalColor, width: WIDTH-20, height: HEIGHT-80}}>
                             <View style={{flexDirection: 'row', height: 50, justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, marginRight: 10}}>
                                 <Text>请选择您擅长的类型，最多选择4项</Text>
-                                <Icon name={'ios-close-circle-outline'} type={'Ionicons'} style={{fontSize: 40}} onPress={()=>this.setState({zt: false})}/>
+                                <Icon name={'ios-close-circle-outline'} type={'Ionicons'} style={{fontSize: 40}} onPress={()=>this.setState({zt2: false})}/>
                             </View>
                             <Text style={{backgroundColor: 'gray', height: 0.5, marginBottom: 10}}/>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginLeft: 10, marginRight: 10, flexWrap: 'wrap'}}>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>债权债务</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>建设工程</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>知识产权</Text>
-                                <Text style={{padding: 10, backgroundColor: Color.btn, color: 'white', marginBottom: 5}}>合同纠纷</Text>
+                                {this.state.arr.map((v, k)=>{
+                                    return <Text key={k} style={{padding: 10, backgroundColor: v.zt?Color.navColor:Color.btn, color: 'white', marginBottom: 5}}
+                                                 onPress={()=>{
+                                                     let arr = [];
+                                                     for(let v of this.state.arr){
+                                                         if(v.zt) {
+                                                             arr.push(v);
+                                                         }
+                                                     }
+                                                     if(arr.length>=4) {
+                                                         return;
+                                                     }
+                                                     this.state.arr[k].zt=!v.zt;
+                                                     this.setState({arr: this.state.arr})}}>{v.name}</Text>
+                                })}
                             </View>
-                            <Button full style={{position: 'absolute', bottom: 0, width: WIDTH}}>
+                            <Button full style={{position: 'absolute', bottom: 0, width: WIDTH}} onPress={()=>this.setState({zt2: false})}>
                                 <Text>确认选择</Text>
                             </Button>
                         </View>
@@ -159,7 +173,7 @@ export default class Cooperation extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full>
+                        <Button full onPress={()=>this._sub()}>
                             <Text style={{color: 'white', fontSize: 15}}>确认提交</Text>
                         </Button>
                     </FooterTab>
@@ -168,19 +182,54 @@ export default class Cooperation extends Component {
         )
     }
 
+    _getLy() {
+        GET(METHOD.field)
+            .then(rs=>{
+                if(rs.code==1) {
+                    let arr = [];
+                    for(let v of rs.data) {
+                        arr.push({zt: false, name: v});
+                    }
+                    /*if(User.good_at.length>0) {
+                        for(let v of User.good_at) {
+                            for(let k of arr) {
+                                if(v == k.name) {
+                                    k.zt = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }*/
+                    this.setState({arr: arr});
+                }else{
+                    err(rs.data)
+                }
+            })
+    }
+
     _sub() {
         if(!User) {
             err('请登录');
             return
         }
         const s = this.state;
-        if(!s.area.a || !s.certificate_number || !s.firm_name || !s.type || !s.advantage || !s.principal || !s.phone || !s.contacts) {
-            err('请填完以上信息');
+        if(!s.area.a || !s.certificate_number || !s.firm_name || !s.type || !s.principal || s.phone.length!=11 || !s.contacts) {
+            msg('请填完以上信息');
             return
         }
+        let a = [];
+        for(let v of s.arr) {
+            if(v.zt) {
+                a.push(v.name);
+            }
+        }
+        if(a.length<=0) {
+            msg('请选择优势区域');
+            return;
+        }
         POST(METHOD.cooperation, `firm_name=${s.firm_name}&type=${s.type}&certificate_type=${s.certificate_type}&certificate_number=${s.certificate_number}
-        &advantage=${s.advantage}&province=${s.area.city}&city=${s.area.a}&area=${s.area.c}&principal=${s.principal}&phone=${s.phone}
-        &scale=${s.scale}&url=${s.url}&user_id=${User.id}&contacts=${s.contacts}`)
+        &advantage=${a}&province=${s.area.city}&city=${s.area.a}&area=${s.area.c}&principal=${s.principal}&phone=${s.phone}
+        &scale=${s.scale}&url=${s.url}&user_id=${User.id}&contacts=${s.contacts}&class=add`)
             .then(rs=>{
                 console.log(rs);
             })

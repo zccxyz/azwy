@@ -22,6 +22,29 @@ import Color from '../Color';
 import Swiper from 'react-native-swiper';
 
 export default class Index extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+        };
+    }
+
+    componentDidMount() {
+        this._getCase();
+    }
+
+    _getCase() {
+        POST(METHOD.apply, `class=4list`)
+            .then(rs=>{
+                if(rs.code==1) {
+                    this.setState({list: rs.data});
+                }else{
+                    err(rs.data);
+                }
+                console.log(rs);
+            })
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -110,66 +133,43 @@ export default class Index extends Component {
                             <Text>进入案源库 >></Text>
                         </TouchableOpacity>
                     </View>
-                    <Swiper style={{height: 110}} autoplay={true} showsPagination={false}>
-                        <View>
-                            <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}} onPress={()=>navigate('Case')}>
-                                <Body>
-                                <Text>阿里巴巴有限公司</Text>
-                                <Text note>待委托</Text>
-                                </Body>
-                                <Right>
-                                    <Text note><Text style={{fontSize: 20}}>126</Text>万元</Text>
-                                </Right>
-                            </ListItem>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                height: 30,
-                                backgroundColor: Color.listColor,
-                                width: WIDTH,
-                                padding: 10
-                            }}>
-                                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                                    <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
-                                    <Text style={{fontSize: 15}}>买卖合同纠纷</Text>
-                                </View>
-                                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                                    <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
-                                    <Text style={{fontSize: 15}}>北京市日本县</Text>
-                                </View>
-                            </View>
-                        </View>
-                        <TouchableOpacity onPress={()=>navigate('Case')}>
-                            <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}}>
-                                <Body>
-                                <Text>阿里巴巴有限公司</Text>
-                                <Text note>待委托</Text>
-                                </Body>
-                                <Right>
-                                    <Text note><Text style={{fontSize: 20}}>126</Text>万元</Text>
-                                </Right>
-                            </ListItem>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                height: 30,
-                                backgroundColor: Color.listColor,
-                                width: WIDTH,
-                                padding: 10
-                            }}>
-                                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                                    <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
-                                    <Text style={{fontSize: 15}}>买卖合同纠纷</Text>
-                                </View>
-                                <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                                    <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
-                                    <Text style={{fontSize: 15}}>北京市日本县</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    </Swiper>
+                    {this.state.list.length>0?(
+                        <Swiper style={{height: 110}} autoplay={true} showsPagination={false}>
+                            {this.state.list.map((v, k)=>{
+                                return (
+                                    <TouchableOpacity key={k} onPress={()=>navigate('Case')}>
+                                        <ListItem style={{backgroundColor: Color.listColor, marginLeft: 0}} onPress={()=>navigate('Case')}>
+                                            <Body>
+                                            <Text>{v.plaintiff}</Text>
+                                            <Text note>待委托</Text>
+                                            </Body>
+                                            <Right>
+                                                <Text note><Text style={{fontSize: 20}}>{v.money/10000}</Text>万元</Text>
+                                            </Right>
+                                        </ListItem>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            height: 30,
+                                            backgroundColor: Color.listColor,
+                                            width: WIDTH,
+                                            padding: 10
+                                        }}>
+                                            <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                                                <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
+                                                <Text style={{fontSize: 15}}>{v.type_name}</Text>
+                                            </View>
+                                            <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                                                <Icon name={'controller-record'} type={'Entypo'} style={{color: Color.tabIcon, fontSize: 15}}/>
+                                                <Text style={{fontSize: 15}}>{v.court}</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            })}
+                        </Swiper>
+                    ):null}
                 </Content>
             </Container>
         )
