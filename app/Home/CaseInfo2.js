@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, Picker, Modal, ScrollView, TouchableOpacity
+    View, Picker, Modal, ScrollView, TouchableOpacity, DeviceEventEmitter
 } from 'react-native';
 import {
     Container,
@@ -68,7 +68,7 @@ export default class CaseInfo2 extends Component {
                     <Content>
                         <View style={{height:150,backgroundColor:Color.navColor, flexDirection:'row', padding:10}}>
                             <View style={{flex:2, justifyContent:'space-around'}}>
-                                <Text style={{fontSize:15, color:'white'}}>被告：{s.plaintiff}</Text>
+                                <Text style={{fontSize:15, color:'white'}}>原告：{s.plaintiff}</Text>
                                 <Text style={{fontSize:15, color:'white'}}>案件类型：{s.type_name}</Text>
                                 <Text style={{fontSize:15, color:'white'}}>
                                     案件阶段：{s.phase==1?'未立案':null}
@@ -96,7 +96,7 @@ export default class CaseInfo2 extends Component {
 
                     <Footer>
                         <FooterTab>
-                            <Button full onPress={()=>this.setState({zt: true})}>
+                            <Button full onPress={()=>this.setState({zt: true})} style={{backgroundColor: Color.navColor}}>
                                 <Text style={{color: 'white', fontSize: 15}}>申请承接此案</Text>
                             </Button>
                         </FooterTab>
@@ -137,7 +137,7 @@ export default class CaseInfo2 extends Component {
                                         <Label style={{fontSize: 16, color:'white'}}>其他优势</Label>
                                         <Textarea style={{width: WIDTH-120}} rowSpan={3} maxLength={100} placeholder="阐述您的其他优势，限100字"  placeholderTextColor='#ddd' onChangeText={e=>{this.setState({rests: e})}}/>
                                     </Item>
-                                    <Button full onPress={()=>this._sub()}>
+                                    <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._sub()}>
                                         <Text style={{color: 'white', fontSize: 15}}>提交申请</Text>
                                     </Button>
                                 </ScrollView>
@@ -168,6 +168,7 @@ export default class CaseInfo2 extends Component {
             POST(METHOD.collect, `uid=${User.id}&apply_id=${this.state.case.id}&class=delete`)
                 .then(rs=>{
                     if(rs.code==1) {
+                        DeviceEventEmitter.emit('Keep')
                         this.setState({star: false})
                     }else{
                         err(rs.data);
@@ -178,6 +179,7 @@ export default class CaseInfo2 extends Component {
             POST(METHOD.collect, `uid=${User.id}&apply_id=${this.state.case.id}&class=add`)
                 .then(rs=>{
                     if(rs.code==1) {
+                        DeviceEventEmitter.emit('Keep')
                         this.setState({star: true})
                     }else{
                         err(rs.data);

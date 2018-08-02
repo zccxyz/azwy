@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet, TouchableOpacity,
-    View, FlatList
+    View, FlatList, DeviceEventEmitter
 } from 'react-native';
 import {
     Container,
@@ -28,7 +28,14 @@ export default class Keep extends Component {
     }
 
     componentDidMount() {
+        this.keep = DeviceEventEmitter.addListener('Keep', (a) => {
+            this._getKeep();
+        });
         this._getKeep();
+    }
+
+    componentWillUnmount() {
+        this.keep.remove();
     }
 
     render() {
@@ -79,6 +86,7 @@ export default class Keep extends Component {
                 if(rs.code==1){
                     this.setState({list: rs.data})
                 } else {
+                    this.setState({list: []});
                     msg(rs.data);
                 }
                 console.log(rs)

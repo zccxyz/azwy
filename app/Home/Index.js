@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, TouchableOpacity,
+    View, TouchableOpacity, DeviceEventEmitter,
 } from 'react-native';
 import {
     Container,
@@ -30,7 +30,14 @@ export default class Index extends Component {
     }
 
     componentDidMount() {
+        this.up = DeviceEventEmitter.addListener('Up', (a) => {
+            this._getCase();
+        });
         this._getCase();
+    }
+
+    componentWillUnmount() {
+        this.up.remove();
     }
 
     _getCase() {
@@ -50,8 +57,13 @@ export default class Index extends Component {
         return (
             <Container style={{flex: 1}}>
                 <Header style={{backgroundColor: Color.navColor}} androidStatusBarColor={Color.navColor}>
+                    <Left/>
                     <Body>
-                    <Title>先赢官司回款后付费</Title>
+                    <Title>
+                        先赢官司
+                        <Thumbnail source={require('../img/logo.jpg')}/>
+                        回款后付费
+                    </Title>
                     </Body>
                 </Header>
 
@@ -59,57 +71,57 @@ export default class Index extends Component {
                     <List style={{backgroundColor: Color.listColor}}>
                         <ListItem avatar onPress={()=>navigate('Jian', {type: 1})}>
                             <Left>
-                                <Thumbnail square size={80} source={require('../img/1.jpg')}/>
+                                <Thumbnail square size={80} source={require('../img/icon1.png')}/>
                             </Left>
                             <Body>
                             <Text>案件诊断</Text>
                             <Text note>预防风险，防范于未然胜诉回款有力保障</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small onPress={()=>navigate('Jian', {type: 1})}>
-                                    <Text>立即申请</Text>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 1})} style={{borderColor: Color.navColor}}>
+                                    <Text style={{color: Color.navColor}}>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
                         <ListItem avatar onPress={()=>navigate('Jian', {type: 2})}>
                             <Left>
-                                <Thumbnail square size={80} source={require('../img/1.jpg')}/>
+                                <Thumbnail square size={80} source={require('../img/icon2.png')}/>
                             </Left>
                             <Body>
-                            <Text>垫资诉讼</Text>
-                            <Text note>因为垫资，所以更用心敢于垫资源于实力</Text>
+                            <Text>诉讼投资</Text>
+                            <Text note>因为诉讼，所以更用心敢于诉讼源于实力</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small onPress={()=>navigate('Jian', {type: 2})}>
-                                    <Text>立即申请</Text>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 2})} style={{borderColor: Color.navColor}}>
+                                    <Text style={{color: Color.navColor}}>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
                         <ListItem avatar onPress={()=>navigate('Jian', {type: 3})}>
                             <Left>
-                                <Thumbnail square size={80} source={require('../img/1.jpg')}/>
+                                <Thumbnail square size={80} source={require('../img/icon3.png')}/>
                             </Left>
                             <Body>
                             <Text>案件执行</Text>
                             <Text note>强力措施，老赖无所遁我们只会做的更好</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small onPress={()=>navigate('Jian', {type: 3})}>
-                                    <Text>立即申请</Text>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 3})} style={{borderColor: Color.navColor}}>
+                                    <Text style={{color: Color.navColor}}>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>
                         <ListItem avatar onPress={()=>navigate('Jian', {type: 4})}>
                             <Left>
-                                <Thumbnail square size={80} source={require('../img/1.jpg')}/>
+                                <Thumbnail square size={80} source={require('../img/icon4.png')}/>
                             </Left>
                             <Body>
                             <Text>债权收购</Text>
                             <Text note>债权拖累，一次性解决快速收购快速变现</Text>
                             </Body>
                             <Right style={{justifyContent: 'center'}}>
-                                <Button bordered small onPress={()=>navigate('Jian', {type: 4})}>
-                                    <Text>立即申请</Text>
+                                <Button bordered small onPress={()=>navigate('Jian', {type: 4})} style={{borderColor: Color.navColor}}>
+                                    <Text style={{color: Color.navColor}}>立即申请</Text>
                                 </Button>
                             </Right>
                         </ListItem>

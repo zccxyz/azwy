@@ -98,7 +98,13 @@ export default class Index extends Component {
                     direction="up"
                     style={{ backgroundColor: Color.navColor }}
                     position="bottomRight"
-                    onPress={() => navigate('Apply', {type: 1})}>
+                    onPress={() => {
+                        if(User){
+                            navigate('Apply', {type: 1})
+                        }else{
+                            navigate('Login');
+                        }
+                    }}>
                     <Icon name="ios-add" />
                 </Fab>
             </Container>

@@ -11,6 +11,7 @@ import {
     Content, Text, Item, Input,
 } from 'native-base';
 import Color from "../Color";
+import {DeviceEventEmitter} from "react-native";
 
 export default class Index extends Component {
     constructor(props) {
@@ -65,6 +66,7 @@ export default class Index extends Component {
                     key: 'user',
                     data: rs.data,
                 });
+                DeviceEventEmitter.emit('User', rs.data);
                 this.props.navigation.navigate('MeInfo');
             } else {
                 msg(rs.data);
@@ -95,19 +97,19 @@ export default class Index extends Component {
                         <Input placeholder="验证码" keyboardType={'numeric'} onChangeText={e => this.setState({yzm: e})}/>
                         <Right>
                             {this.state.time > 0 ?
-                                <Button bordered small>
-                                    <Text>{this.state.time}秒</Text>
+                                <Button bordered small style={{borderColor: Color.navColor}}>
+                                    <Text style={{color:Color.navColor}}>{this.state.time}秒</Text>
                                 </Button> :
-                                <Button bordered small onPress={() => this._send()}>
-                                    <Text>发送验证码</Text>
+                                <Button style={{borderColor: Color.navColor}} bordered small onPress={() => this._send()}>
+                                    <Text style={{color:Color.navColor}}>发送验证码</Text>
                                 </Button>}
                         </Right>
                     </Item>
                     <Item>
                         <Input placeholder="密码，6-15字符" secureTextEntry onChangeText={e => this.setState({pw: e})}/>
                     </Item>
-                    <Button block style={{marginBottom: 10}} onPress={() => this._reg()}>
-                        <Text>注册并登录{this.state.time}</Text>
+                    <Button block style={{marginBottom: 10, backgroundColor: Color.navColor}} onPress={() => this._reg()}>
+                        <Text>注册并登录</Text>
                     </Button>
                 </Content>
             </Container>

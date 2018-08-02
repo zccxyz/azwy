@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, Picker, Modal, ScrollView,
+    View, Picker, Modal, DeviceEventEmitter,
 } from 'react-native';
 import {
     Container,
@@ -96,7 +96,7 @@ export default class Success extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>navigate('Home')}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>{navigate('Home');DeviceEventEmitter.emit('Up');}}>
                             <Text style={{color: 'white', fontSize: 15}}>确 定</Text>
                         </Button>
                     </FooterTab>

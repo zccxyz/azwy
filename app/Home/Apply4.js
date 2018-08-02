@@ -130,7 +130,7 @@ export default class Apply4 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._next()}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._next()}>
                             <Text style={{color: 'white', fontSize: 15}}>下一步</Text>
                         </Button>
                     </FooterTab>

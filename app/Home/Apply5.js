@@ -60,7 +60,7 @@ export default class Apply4 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._sub()}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._sub()}>
                             <Text style={{color: 'white', fontSize: 15}}>提交申请</Text>
                         </Button>
                     </FooterTab>

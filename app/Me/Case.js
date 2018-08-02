@@ -69,7 +69,7 @@ export default class Case extends Component {
                         {v.audit_type==0?'待审核':''}
                         {v.audit_type==1?'审核通过':''}
                         {v.audit_type==2?'审核不通过':''}
-                        </Text>
+                    </Text>
                     <Icon name={'chevron-right'} type={'Entypo'}/>
                 </Right>
             </ListItem>

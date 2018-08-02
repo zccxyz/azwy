@@ -54,18 +54,18 @@ export default class Index extends Component {
                         <Input placeholder="请输入验证码"  keyboardType={'numeric'} onChangeText={e => this.setState({yzm: e})}/>
                         <Right>
                             {this.state.time > 0 ?
-                                <Button bordered small>
-                                    <Text>{this.state.time}秒</Text>
+                                <Button bordered small style={{borderColor: Color.navColor}}>
+                                    <Text style={{color:Color.navColor}}>{this.state.time}秒</Text>
                                 </Button> :
-                                <Button bordered small onPress={() => this._send()}>
-                                    <Text>发送验证码</Text>
+                                <Button style={{borderColor: Color.navColor}} bordered small onPress={() => this._send()}>
+                                    <Text style={{color:Color.navColor}}>发送验证码</Text>
                                 </Button>}
                         </Right>
                     </Item>
                     <Item>
                         <Input placeholder="请输入新手机号"  onChangeText={e => this.setState({tel: e})} keyboardType={'numeric'}/>
                     </Item>
-                    <Button block style={{marginBottom: 10}} onPress={()=>this._edit()}>
+                    <Button block style={{marginBottom: 10,backgroundColor: Color.navColor}} onPress={()=>this._edit()}>
                         <Text>验证后绑定手机</Text>
                     </Button>
                 </Content>

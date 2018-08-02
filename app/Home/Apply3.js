@@ -82,7 +82,7 @@ export default class Apply3 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>{
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>{
                             let s = this.state;
                             if(!this.state.name || !this.state.assets_name || !this.state.assets_price || !this.state.total_price){
                                 msg('请填完以上信息');

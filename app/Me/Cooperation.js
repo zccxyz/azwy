@@ -173,7 +173,7 @@ export default class Cooperation extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._sub()}>
+                        <Button full onPress={()=>this._sub()} style={{backgroundColor: Color.navColor}}>
                             <Text style={{color: 'white', fontSize: 15}}>确认提交</Text>
                         </Button>
                     </FooterTab>
@@ -231,7 +231,12 @@ export default class Cooperation extends Component {
         &advantage=${a}&province=${s.area.city}&city=${s.area.a}&area=${s.area.c}&principal=${s.principal}&phone=${s.phone}
         &scale=${s.scale}&url=${s.url}&user_id=${User.id}&contacts=${s.contacts}&class=add`)
             .then(rs=>{
-                console.log(rs);
+                if(rs.code==1){
+                    msg('提交成功');
+                    this.props.navigation.goBack();
+                }else{
+                    err('提交失败');
+                }
             })
     }
 

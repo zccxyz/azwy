@@ -64,6 +64,7 @@ export default class Apply2 extends Component {
                     <Body>
                     <Title>申请表</Title>
                     </Body>
+                    <Right/>
                 </Header>
 
                 <Content style={{backgroundColor: Color.listColor}}>
@@ -99,6 +100,7 @@ export default class Apply2 extends Component {
                                 <Picker.Item label="重审" value="4" />
                                 <Picker.Item label="执行" value="5" />
                                 <Picker.Item label="再审" value="6" />
+                                <Picker.Item label="立案" value="7" />
                             </Picker>
                         </Item>
                         <Item fixedLabel>
@@ -160,7 +162,7 @@ export default class Apply2 extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._sub()}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._sub()}>
                             <Text style={{color: 'white', fontSize: 15}}>下一步</Text>
                         </Button>
                     </FooterTab>
@@ -187,7 +189,7 @@ export default class Apply2 extends Component {
         }
         POST(METHOD.apply, `plaintiff=${s.plaintiff}&defendant=${s.defendant}&court=${s.court}&money=${s.money}
         is_lawyer=${s.is_lawyer}&abstract=${s.abstract}&phase=${s.phase}&user_id=${User.id}&class=add&type=${s.type}
-        &apply_type=${this.state.apply_type}`)
+        &apply_type=${this.state.apply_type}&reference_number=${s.reference_number}&deadline=${s.deadline}&gist=${s.gist}&judge=${s.judge}&property=${s.property}`)
             .then(rs=>{
                 if(rs.code==1){
                     this.props.navigation.navigate('Success');

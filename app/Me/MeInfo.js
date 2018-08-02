@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
-    View, Picker, Modal, ScrollView,
+    View, Picker, Modal, ScrollView, DeviceEventEmitter,
 } from 'react-native';
 import {
     Container,
@@ -93,13 +93,13 @@ export default class MeInfo extends Component {
                             <ListItem style={{width: WIDTH/2}}>
                                 <Text>普通用户</Text>
                                 <Right>
-                                    <Radio selected={this.state.status==1?true:false} onPress={()=>this.setState({status: 1})}/>
+                                    <Radio selectedColor={Color.navColor} selected={this.state.status==1?true:false} onPress={()=>this.setState({status: 1})}/>
                                 </Right>
                             </ListItem>
                             <ListItem style={{width: WIDTH/2}}>
                                 <Text>升级为律师</Text>
                                 <Right>
-                                    <Radio selected={this.state.status==2?true:false}  onPress={()=>this.setState({status: 2})}/>
+                                    <Radio selectedColor={Color.navColor} selected={this.state.status==2?true:false}  onPress={()=>this.setState({status: 2})}/>
                                 </Right>
                             </ListItem>
                         </View>
@@ -164,7 +164,7 @@ export default class MeInfo extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._save()}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._save()}>
                             <Text style={{color: 'white'}}>完成修改</Text>
                         </Button>
                     </FooterTab>
@@ -174,8 +174,8 @@ export default class MeInfo extends Component {
     }
 
     _getLy() {
-        GET(METHOD.field)
-            .then(rs=>{
+        GET(METHOD.field).then(rs=>{
+            console.log(rs);
                 if(rs.code==1) {
                     let arr = [];
                     for(let v of rs.data) {
@@ -203,10 +203,19 @@ export default class MeInfo extends Component {
             if(!this.state.user_name || !this.state.certificate || !this.state.email) {
                 err('请填完以上内容');
             }else{
-                POST(METHOD.amend, `user_name=${this.state.user_name}&certificate=${this.state.certificate}&status=${this.state.status}&email=${this.state.email}
-        &genre=${this.state.genre}&id=${User.id}`)
+                POST(METHOD.amend, `user_name=${this.state.user_name}&certificate=${this.state.certificate}&status=${this.state.status}&email=${this.state.email}&genre=${this.state.genre}&id=${User.id}`)
                     .then(rs=>{
-                        console.log(rs);
+                        if(rs.code==1){
+                            msg('修改成功');
+                            User = rs.data;
+                            SAVE.save({
+                                key: 'user',
+                                data: rs.data,
+                            })
+                            DeviceEventEmitter.emit('User', rs.data);
+                        }else{
+                            err(rs.data);
+                        }
                     });
             }
         }else{
@@ -228,6 +237,7 @@ export default class MeInfo extends Component {
         &genre=${this.state.genre}&id=${User.id}&lawyer=${this.state.lawyer}&lawyer_name=${this.state.lawyer_name}&province=${this.state.province}&city=${this.state.city}&
         area=${this.state.area}&good_at=${arr}`)
                     .then(rs=>{
+                        console.log(rs);
                         if(rs.code==1) {
                             msg('修改成功');
                             User = rs.data;
@@ -235,10 +245,10 @@ export default class MeInfo extends Component {
                                 key: 'user',
                                 data: rs.data,
                             })
+                            DeviceEventEmitter.emit('User', rs.data);
                         }else{
                             err(rs.data);
                         }
-                        console.log(rs);
                     });
             }
         }

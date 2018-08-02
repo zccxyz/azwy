@@ -88,7 +88,7 @@ export default class Info extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>this._logout()}>
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>this._logout()}>
                             <Text style={{color: 'white'}}>退出登录</Text>
                         </Button>
                     </FooterTab>

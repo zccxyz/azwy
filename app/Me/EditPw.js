@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    DeviceEventEmitter,
     Platform,
     StyleSheet,
     View
@@ -46,7 +47,7 @@ export default class EditName extends Component {
                 <Content style={{backgroundColor: Color.listColor}}>
                     <Item style={{marginBottom: 10}}><Input secureTextEntry placeholder="旧密码" onChangeText={e=>this.setState({pw: e})}/></Item>
                     <Item style={{marginBottom: 10}}><Input secureTextEntry placeholder="新密码" onChangeText={e=>this.setState({new: e})}/></Item>
-                    <Button block style={{marginBottom: 10}} onPress={()=>this._editPw()}>
+                    <Button block style={{marginBottom: 10,backgroundColor: Color.navColor}} onPress={()=>this._editPw()}>
                         <Text>确认修改</Text>
                     </Button>
                 </Content>

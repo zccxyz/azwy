@@ -61,11 +61,11 @@ class Login1 extends Component {
                             <Input placeholder="密码" secureTextEntry onChangeText={e => this.setState({pw: e})}/>
                         </Item>
                     </Form>
-                    <Button block style={{marginBottom: 10}} onPress={() => this._login()}>
+                    <Button block style={{marginBottom: 10, backgroundColor: Color.navColor}} onPress={() => this._login()}>
                         <Text>登录</Text>
                     </Button>
-                    <Button bordered block onPress={() => navigate('Reg')}>
-                        <Text>注册新用户</Text>
+                    <Button bordered style={{borderColor: Color.navColor}} block onPress={() => navigate('Reg')}>
+                        <Text style={{color: Color.navColor}}>注册新用户</Text>
                     </Button>
                 </Content>
             </Container>
@@ -97,20 +97,20 @@ class Login2 extends Component {
                             <Input placeholder="验证码" keyboardType={'numeric'} onChangeText={e => this.setState({yzm: e})}/>
                             <Right>
                                 {this.state.time > 0 ?
-                                    <Button bordered small>
-                                        <Text>{this.state.time}秒</Text>
+                                    <Button bordered small style={{borderColor: Color.navColor}}>
+                                        <Text style={{color:Color.navColor}}>{this.state.time}秒</Text>
                                     </Button> :
-                                    <Button bordered small onPress={() => this._send()}>
-                                        <Text>发送验证码</Text>
+                                    <Button style={{borderColor: Color.navColor}} bordered small onPress={() => this._send()}>
+                                        <Text style={{color:Color.navColor}}>发送验证码</Text>
                                     </Button>}
                             </Right>
                         </Item>
                     </Form>
-                    <Button block style={{marginBottom: 10}} onPress={()=>this._login()}>
+                    <Button block style={{marginBottom: 10, backgroundColor: Color.navColor}} onPress={()=>this._login()}>
                         <Text>登录</Text>
                     </Button>
-                    <Button bordered block onPress={() => navigate('Reg')}>
-                        <Text>注册新用户</Text>
+                    <Button bordered block onPress={() => navigate('Reg')} style={{borderColor: Color.navColor}}>
+                        <Text style={{color: Color.navColor}}>注册新用户</Text>
                     </Button>
                 </Content>
             </Container>

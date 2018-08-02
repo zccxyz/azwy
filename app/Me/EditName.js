@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+    DeviceEventEmitter,
     Platform,
     StyleSheet,
     View
@@ -44,9 +45,9 @@ export default class EditName extends Component {
 
                 <Content style={{backgroundColor: Color.listColor}}>
                     <Item style={{marginBottom: 10}}><Input placeholder="请输入用户名" onChangeText={e=>this.setState({name: e})}/></Item>
-                    <Text style={{marginBottom: 10}}>用户只能修改一次（1-10个字）</Text>
-                    <Button block style={{marginBottom: 10}} onPress={()=>this._modify()}>
-                        <Text>确认修改</Text>
+                    {/*<Text style={{marginBottom: 10}}>用户只能修改一次（1-10个字）</Text>*/}
+                    <Button block style={{marginBottom: 10, backgroundColor: Color.navColor}} onPress={()=>this._modify()}>
+                        <Text style={{color: 'white'}}>确认修改</Text>
                     </Button>
                 </Content>
             </Container>
@@ -62,6 +63,11 @@ export default class EditName extends Component {
             .then(rs=>{
                 if(rs.code==1) {
                     msg('修改成功');
+                    SAVE.save({
+                        key: 'user',
+                        data: rs.data,
+                    });
+                    DeviceEventEmitter.emit('User', rs.data);
                     this.props.navigation.goBack();
                 }else{
                     err(rs.data);

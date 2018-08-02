@@ -1,7 +1,7 @@
 export default Color = {
     tabColor: 'white',
-    tabIcon: '#3F51B5',
-    navColor: '#3F51B5',
+    tabIcon: '#68EE68',
+    navColor: '#68EE68',
     listColor: 'white',
     meFontColor: 'white',
     meListColor: 'black',

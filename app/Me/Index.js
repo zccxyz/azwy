@@ -57,6 +57,7 @@ export default class Index extends Component {
             <Container style={{flex: 1}}>
                 <Header style={{backgroundColor: Color.navColor}} androidStatusBarColor={Color.navColor}
                         noShadow={true}>
+                    <Left/>
                     <Body>
                     <Title>我的安枕无忧</Title>
                     </Body>
@@ -65,7 +66,7 @@ export default class Index extends Component {
                 <Content style={{flex: 1}}>
                     <List style={{backgroundColor: Color.navColor}}>
                         <ListItem onPress={()=>navigate(this.state.zt==1?'Login':'Info')}>
-                            {this.state.zt==2?<Thumbnail large source={require('../img/1.jpg')}/>:<Icon name={'ios-person-outline'} style={{fontSize: 60, color: 'white'}}/>}
+                            {this.state.zt==2?<Thumbnail large source={require('../img/logo.jpg')}/>:<Icon name={'ios-person-outline'} style={{fontSize: 60, color: 'white'}}/>}
                             <Body>
                                 {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.nickname}</Text>:<Text style={{color: Color.meFontColor}}>立即登录</Text>}
                                 {this.state.user?<Text style={{color: Color.meFontColor}}>{this.state.user.tel}</Text>:<Text style={{color: Color.meFontColor}} note>登录后享受更多特权</Text>}

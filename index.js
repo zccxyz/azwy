@@ -6,7 +6,7 @@ import Request from './app/Request';
 GLOBAL.HEIGHT = Dimensions.get('window').height;
 GLOBAL.WIDTH = Dimensions.get('window').width;
 GLOBAL.SAVE = Save;
-GLOBAL.YM = 'http://39.105.85.127/azwy/home/';
+GLOBAL.YM = 'http://app.susongtouzi.com/index.php/home/';
 GLOBAL.METHOD = Request;
 GLOBAL.POST = function (method, params) {
     return fetch(`${YM + method}`, {

@@ -22,7 +22,7 @@ export default class Apply extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: 1,
+            type: User.genre,
             type2: 2,
             zt: false,
             type3: 1,
@@ -93,14 +93,18 @@ export default class Apply extends Component {
                                 <Label>证件号</Label>
                                 <Input defaultValue={'132123132123'} disabled />
                             </Item>
-                            <Item fixedLabel>
-                                <Label>律师执业证号</Label>
-                                <Input defaultValue={'132123132123'} disabled />
-                            </Item>
-                            <Item fixedLabel>
-                                <Label>律所名称</Label>
-                                <Input defaultValue={'毛利小五郎'} disabled />
-                            </Item>
+                            {User.status==2?(
+                                <View>
+                                    <Item fixedLabel>
+                                        <Label>律师执业证号</Label>
+                                        <Input defaultValue={'132123132123'} disabled />
+                                    </Item>
+                                    <Item fixedLabel>
+                                        <Label>律所名称</Label>
+                                        <Input defaultValue={'毛利小五郎'} disabled />
+                                    </Item>
+                                </View>
+                            ):null}
                             <Item fixedLabel>
                                 <Label>联系方式</Label>
                                 <Input defaultValue={'15577852486'} disabled />
@@ -111,7 +115,7 @@ export default class Apply extends Component {
 
                 <Footer>
                     <FooterTab>
-                        <Button full onPress={()=>{
+                        <Button style={{backgroundColor: Color.navColor}} full onPress={()=>{
                             if(this.state.type3==4){
                                 if(!this.state.certificate || !this.state.user_name || !this.state.lawyer_name || !this.state.phone){
                                     msg('请填完以上信息');
